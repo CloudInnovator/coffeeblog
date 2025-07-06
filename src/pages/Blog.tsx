@@ -14,6 +14,7 @@ interface BlogPost {
   category: string;
   readTime: string;
   image: string;
+  imageUrl?: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -26,7 +27,8 @@ const blogPosts: BlogPost[] = [
     date: "2024-07-20",
     category: "Systems",
     readTime: "8 min read",
-    image: "🎨"
+    image: "🎨",
+    imageUrl: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
   },
   {
     id: 2,
@@ -48,7 +50,8 @@ const blogPosts: BlogPost[] = [
     date: "2024-07-10",
     category: "Architecture",
     readTime: "10 min read",
-    image: "🏗️"
+    image: "🏗️",
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
   },
   {
     id: 4,
@@ -70,7 +73,8 @@ const blogPosts: BlogPost[] = [
     date: "2024-06-28",
     category: "AI/ML",
     readTime: "9 min read",
-    image: "💅"
+    image: "💅",
+    imageUrl: "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
   },
   {
     id: 6,
@@ -199,6 +203,10 @@ const Blog: React.FC = () => {
                 <p>This is a preview of our blog post content. In a full implementation, this would contain the complete article with proper formatting, images, and more detailed content.</p>
               </div>
               <div className="post-actions-full">
+                <LikeButton
+                  articleId={selectedPost.id.toString()}
+                  title={selectedPost.title}
+                />
                 <button className="like-btn">
                   ❤️ Like Article
                 </button>
@@ -209,6 +217,12 @@ const Blog: React.FC = () => {
                   category={selectedPost.category}
                   url={`/blog/${selectedPost.id}`}
                 />
+                <button className="reads-btn">
+                  👁️ {Math.floor(Math.random() * 5000) + 1000}
+                </button>
+                <button className="comments-btn">
+                  💬 {Math.floor(Math.random() * 100) + 10}
+                </button>
               </div>
               <ArticleComments 
                 articleId={selectedPost.id.toString()}
@@ -247,26 +261,30 @@ const Blog: React.FC = () => {
           {filteredPosts.map(post => (
             <article 
               key={post.id} 
-              className="post-card"
+              className={`post-card ${post.imageUrl ? 'has-image' : 'has-default-image'}`}
             >
-              <div className="post-image">{post.image}</div>
+              {post.imageUrl ? (
+                <div 
+                  className="post-bg-image"
+                  style={{ backgroundImage: `url(${post.imageUrl})` }}
+                />
+              ) : (
+                <div className="post-default-image">
+                  <div className="post-default-overlay">
+                    <span className="post-emoji">{post.image}</span>
+                  </div>
+                </div>
+              )}
               <div className="post-content">
                 <h3 className="post-title" onClick={() => handlePostClick(post)}>{post.title}</h3>
                 <p className="post-excerpt">{post.excerpt}</p>
-                <div className="post-meta">
-                  <span>{new Date(post.date).toLocaleDateString()}</span>
-                  <span>{post.readTime}</span>
-                </div>
-                <div className="read-more-container">
+                <div className="post-category-line">
                   <span className="post-category">{post.category}</span>
-                  <button className="read-more" onClick={() => handlePostClick(post)}>Read More →</button>
                 </div>
-                <div className="post-header">
-                  <div className="post-actions">
-                    <LikeButton
-                      articleId={post.id.toString()}
-                      title={post.title}
-                    />
+                <div className="post-meta-compact">
+                  <span className="post-date">{new Date(post.date).toLocaleDateString()}</span>
+                  <span className="post-read-time">{post.readTime}</span>
+                  <div className="post-actions-inline">
                     <SaveArticleButton
                       articleId={post.id.toString()}
                       title={post.title}
@@ -274,12 +292,7 @@ const Blog: React.FC = () => {
                       category={post.category}
                       url={`/blog/${post.id}`}
                     />
-                    <button className="reads-btn" disabled>
-                      👁️ {Math.floor(Math.random() * 5000) + 1000}
-                    </button>
-                    <button className="comments-btn" disabled>
-                      💬 {Math.floor(Math.random() * 100) + 10}
-                    </button>
+                    <button className="read-more" onClick={() => handlePostClick(post)}>Read More →</button>
                   </div>
                 </div>
               </div>
