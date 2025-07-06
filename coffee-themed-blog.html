@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechInsights - Premium Tech Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        /* Main Content */
+        main {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Posts */
+        .blog-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+        }
+
+        /* Enhanced Coffee Support Section */
+        .subscription-section {
+            background: linear-gradient(135deg, #8B4513 0%, #CD853F 25%, #D2691E 50%, #DEB887 75%, #F4A460 100%);
+            padding: 4rem 0;
+            color: white;
+            position: relative;
+        }
+
+        .subscription-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(210, 180, 140, 0.05) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subscription-title {
+            text-align: center;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #FFF8DC, #FFFACD, #FFD700, #FFFF99);
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subscription-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 248, 220, 0.9);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coffee-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coffee-intro h3 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00, #FF7F50);
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
+            margin-bottom: 1rem;
+        }
+
+        .coffee-intro p {
+            font-size: 1.1rem;
+            color: rgba(255, 248, 220, 0.9);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-card {
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: #FFD700;
+        }
+
+        .plan-card:hover::before {
+            opacity: 1;
+        }
+
+        .plan-card.featured {
+            background: linear-gradient(145deg, #DAA520, #FFD700);
+            color: #8B4513;
+            border-color: #FFA500;
+            transform: scale(1.02);
+        }
+
+        .plan-card.premium {
+            background: linear-gradient(145deg, #B8860B, #DAA520);
+            color: white;
+        }
+
+        .coffee-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.9;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card.featured .plan-btn {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+        }
+
+        .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        .plan-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .plan-btn:hover::before {
+            left: 100%;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #FF4500, #FF6347);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+        }
+
+        .coffee-note {
+            text-align: center;
+            margin-top: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coffee-note p {
+            color: rgba(255, 248, 220, 0.9);
+            font-size: 1rem;
+        }
+
+        .coffee-note a {
+            color: #FFD700;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .coffee-note a:hover {
+            color: #FFA500;
+        }
+
+        /* One-time Coffee Section */
+        .onetime-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .onetime-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .onetime-subtitle {
+            text-align: center;
+            color: rgba(255, 248, 220, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .onetime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .onetime-card {
+            background: linear-gradient(145deg, #CD853F, #DEB887);
+            color: #8B4513;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .onetime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: #FFD700;
+        }
+
+        .onetime-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .onetime-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .onetime-label {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: #f8f9fa;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .newsletter-input:focus {
+            border-color: #667eea;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .subscription-title {
+                font-size: 2.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.featured {
+                transform: none;
+            }
+
+            .onetime-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subscription-title {
+                font-size: 2rem;
+            }
+
+            .coffee-intro h3 {
+                font-size: 1.5rem;
+            }
+
+            .plan-card {
+                padding: 1.5rem;
+            }
+
+            .onetime-section {
+                padding: 2rem;
+                margin: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">TechInsights</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button class="subscribe-btn" onclick="openModal()">Buy Me Coffee ☕</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Stay Ahead of the Tech Curve</h1>
+                <p>Get exclusive insights, in-depth analysis, and premium content from industry experts. Join thousands of tech professionals who trust TechInsights for their daily dose of innovation.</p>
+            </div>
+        </section>
+
+        <section class="blog-section" id="blog">
+            <div class="container">
+                <h2 class="section-title">Latest Articles</h2>
+                <div class="posts-grid">
+                    <article class="post-card">
+                        <div class="post-image">AI Revolution</div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span>Dec 15, 2024</span>
+                                <span class="premium-badge">Premium</span>
+                            </div>
+                            <h3 class="post-title">The Future of AI in Enterprise Software</h3>
+                            <p class="post-excerpt">Exploring how artificial intelligence is transforming enterprise software development and what it means for developers and businesses alike.</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-image">Cloud Computing</div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span>Dec 12, 2024</span>
+                                <span>Free</span>
+                            </div>
+                            <h3 class="post-title">Serverless Architecture Best Practices</h3>
+                            <p class="post-excerpt">A comprehensive guide to building scalable serverless applications with modern cloud platforms and microservices architecture.</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-image">Cybersecurity</div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span>Dec 10, 2024</span>
+                                <span class="premium-badge">Premium</span>
+                            </div>
+                            <h3 class="post-title">Zero Trust Security Models</h3>
+                            <p class="post-excerpt">Understanding the principles of zero trust security and how to implement it in your organization's infrastructure.</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-image">Web Development</div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span>Dec 8, 2024</span>
+                                <span>Free</span>
+                            </div>
+                            <h3 class="post-title">Modern JavaScript Frameworks Comparison</h3>
+                            <p class="post-excerpt">An in-depth comparison of React, Vue, and Angular in 2024, helping you choose the right framework for your next project.</p>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="subscription-section" id="pricing">
+            <div class="container">
+                <h2 class="subscription-title">☕ Support TechInsights with Coffee</h2>
+                <p class="subscription-subtitle">Fuel great tech content with your coffee support! Choose your way to keep the innovation flowing.</p>
+                
+                <div class="coffee-intro">
+                    <h3>Choose Your Coffee Support Level</h3>
+                    <p>Whether you prefer regular coffee deliveries or one-time appreciation, every cup helps create better tech journalism!</p>
+                </div>
+
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div class="coffee-icon">☕</div>
+                        <h3 class="plan-name">Weekly Espresso</h3>
+                        <div class="plan-price">$3<span>/week</span></div>
+                        <ul class="plan-features">
+                            <li>Weekly appreciation support</li>
+                            <li>Access to premium articles</li>
+                            <li>Weekly thank you notes</li>
+                            <li>Community chat access</li>
+                            <li>Cancel anytime</li>
+                        </ul>
+                        <button class="plan-btn" onclick="selectPlan('weekly')">☕ Weekly Support</button>
+                    </div>
+
+                    <div class="plan-card featured">
+                        <div class="popular-badge">⭐ Most Popular</div>
+                        <div class="coffee-icon">☕☕</div>
+                        <h3 class="plan-name">Monthly Brew</h3>
+                        <div class="plan-price">$10<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li>Everything in Weekly Espresso</li>
+                            <li>Early access to new articles</li>
+                            <li>Behind-the-scenes content</li>
+                            <li>Priority newsletter</li>
+                            <li>Monthly video updates</li>
+                        </ul>
+                        <button class="plan-btn" onclick="selectPlan('monthly')">☕ Best Value</button>
+                    </div>
+
+                    <div class="plan-card premium">
+                        <div class="coffee-icon">☕🍰</div>
+                        <h3 class="plan-name">Coffee Connoisseur</h3>
+                        <div class="plan-price">$25<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li>Everything in Monthly Brew</li>
+                            <li>Monthly 1-on-1 video calls</li>
+                            <li>Request specific topics</li>
+                            <li>Get mentioned in articles</li>
+                            <li>Exclusive supporter badge</li>
+                        </ul>
+                        <button class="plan-btn" onclick="selectPlan('premium')">☕ Premium Support</button>
+                    </div>
+                </div>
+
+                <!-- One-time Coffee Options -->
+                <div class="onetime-section">
+                    <h3 class="onetime-title">🚀 One-Time Coffee Support</h3>
+                    <p class="onetime-subtitle">Not ready for a subscription? Show your appreciation with a one-time coffee!</p>
+                    <div class="onetime-grid">
+                        <div class="onetime-card" onclick="selectOneTime('single')">
+                            <div class="onetime-icon">☕</div>
+                            <div class="onetime-amount">$3</div>
+                            <div class="onetime-label">Quick Espresso</div>
+                        </div>
+                        <div class="onetime-card" onclick="selectOneTime('pack')">
+                            <div class="onetime-icon">☕🍰</div>
+                            <div class="onetime-amount">$10</div>
+                            <div class="onetime-label">Coffee & Pastry</div>
+                        </div>
+                        <div class="onetime-card" onclick="selectOneTime('mega')">
+                            <div class="onetime-icon">☕☕☕</div>
+                            <div class="onetime-amount">$25</div>
+                            <div class="onetime-label">Coffee Party</div>
+                        </div>
+                        <div class="onetime-card" onclick="openCustomModal()">
+                            <div class="onetime-icon">💝</div>
+                            <div class="onetime-amount">Custom</div>
+                            <div class="onetime-label">Your Choice</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coffee-note">
+                    <p>🎁 <strong>All coffee supporters get premium access!</strong> Every coffee purchase unlocks premium articles and exclusive content.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="container">
+                <h2 class="section-title">Stay Updated</h2>
+                <p>Get the latest tech insights delivered to your inbox weekly</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TechInsights. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <!-- Coffee Support Modal -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>☕ Coffee Subscriptions</h2>
+            <p>Choose your ongoing coffee support level:</p>
+            <div style="margin: 2rem 0;">
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectPlan('weekly')">☕ Weekly - $3/week</button>
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectPlan('monthly')">☕ Monthly - $10/month</button>
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectPlan('premium')">☕ Premium - $25/month</button>
+            </div>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
+                <a href="#" onclick="openOneTimeModal()" style="color: #8B4513; text-decoration: underline;">Prefer one-time? Click here for single coffee options</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- One-time Coffee Modal -->
+    <div id="oneTimeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOneTimeModal()">&times;</span>
+            <h2>☕ One-time Coffee</h2>
+            <p>Show your appreciation with a one-time coffee:</p>
+            <div style="margin: 2rem 0;">
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectOneTime('single')">☕ Quick Espresso - $3</button>
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectOneTime('pack')">☕ Coffee & Pastry - $10</button>
+                <button class="plan-btn" style="margin: 0.5rem; width: auto;" onclick="selectOneTime('mega')">☕ Coffee Party - $25</button>
+            </div>
+            <p style="color: #666; font-size: 0.9rem;">One-time payments with no recurring charges.</p>
+        </div>
+    </div>
+
+    <script>
+        // User coffee support state
+        let userSupport = {
+            level: 'none',
+            subscriptionType: 'none', // 'weekly', 'monthly', 'premium', 'none'
+            totalSupported: 0,
+            hasSupported: false,
+            hasSubscription: false,
+            email: ''
+        };
+
+        // Coffee support tracking
+        const coffeeSupport = {
+            weekly: { amount: 3, name: 'Weekly Espresso', period: 'week' },
+            monthly: { amount: 10, name: 'Monthly Brew', period: 'month' },
+            premium: { amount: 25, name: 'Coffee Connoisseur', period: 'month' }
+        };
+
+        const oneTimeSupport = {
+            single: { amount: 3, name: 'Quick Espresso' },
+            pack: { amount: 10, name: 'Coffee & Pastry' },
+            mega: { amount: 25, name: 'Coffee Party' }
+        };
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('subscriptionModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('subscriptionModal').style.display = 'none';
+        }
+
+        function openOneTimeModal() {
+            closeModal();
+            document.getElementById('oneTimeModal').style.display = 'block';
+        }
+
+        function closeOneTimeModal() {
+            document.getElementById('oneTimeModal').style.display = 'none';
+        }
+
+        function openCustomModal() {
+            const amount = prompt('Enter your custom coffee amount ($):');
+            if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
+                userSupport.totalSupported += Number(amount);
+                userSupport.hasSupported = true;
+                showNotification(`☕ Thank you for the $${amount} custom coffee! You're amazing!`, 'success');
+                updateUI();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('subscriptionModal');
+            const oneTimeModal = document.getElementById('oneTimeModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+            if (event.target === oneTimeModal) {
+                oneTimeModal.style.display = 'none';
+            }
+        }
+
+        // Coffee subscription selection
+        function selectPlan(plan) {
+            const support = coffeeSupport[plan];
+            if (!support) return;
+            
+            userSupport.level = plan;
+            userSupport.subscriptionType = plan;
+            userSupport.hasSupported = true;
+            userSupport.hasSubscription = true;
+            
+            closeModal();
+            
+            // Simulate subscription process
+            if (plan === 'weekly') {
+                showNotification('☕ Weekly coffee subscription activated! You\'ll be supporting great content every week.', 'success');
+            } else if (plan === 'monthly') {
+                showNotification('☕ Monthly coffee subscription started! Thanks for the ongoing support.', 'success');
+            } else if (plan === 'premium') {
+                showNotification('☕🍰 Premium coffee subscription activated! I\'ll reach out soon to schedule our first chat.', 'success');
+            }
+            
+            updateUI();
+        }
+
+        // One-time coffee selection
+        function selectOneTime(plan) {
+            const support = oneTimeSupport[plan];
+            if (!support) return;
+            
+            userSupport.level = plan;
+            userSupport.hasSupported = true;
+            userSupport.totalSupported += support.amount;
+            
+            closeOneTimeModal();
+            
+            // Simulate payment process
+            if (plan === 'single') {
+                showNotification('☕ Thank you for the coffee! Your support means the world to me.', 'success');
+            } else if (plan === 'pack') {
+                showNotification('☕🍰 Wow, coffee and pastry! You\'re amazing! Enjoy the premium content.', 'success');
+            } else if (plan === 'mega') {
+                showNotification('☕☕☕ Coffee party?! You\'re incredible! Thank you for the generous support.', 'success');
+            }
+            
+            updateUI();
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            userSupport.email = email;
+            
+            showNotification('☕ Thank you for subscribing! You\'ll get the best tech insights in your inbox.', 'success');
+            event.target.reset();
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 2rem;
+                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+                color: white;
+                border-radius: 5px;
+                z-index: 1001;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Update UI based on support level
+        function updateUI() {
+            const subscribeBtn = document.querySelector('.subscribe-btn');
+            if (userSupport.hasSupported) {
+                subscribeBtn.innerHTML = `☕ Coffee Supporter!`;
+                subscribeBtn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                subscribeBtn.style.animation = 'pulse 2s infinite';
+            }
+        }
+
+        // Handle article reading
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const isPremium = this.closest('.post-card').querySelector('.premium-badge');
+                
+                if (isPremium && !userSupport.hasSupported) {
+                    showNotification('☕ This is premium content! Consider supporting with a coffee subscription or one-time purchase.', 'error');
+                    openModal();
+                    return;
+                }
+                
+                showNotification('📖 Loading article... Thanks for reading!', 'success');
+                
+                // Show appreciation message for supporters
+                if (userSupport.hasSubscription) {
+                    setTimeout(() => {
+                        showNotification('☕ Thank you for being a coffee subscriber! Enjoy exclusive content.', 'success');
+                    }, 1500);
+                } else if (userSupport.hasSupported) {
+                    setTimeout(() => {
+                        showNotification('☕ Thank you for your coffee support! Enjoy the premium content.', 'success');
+                    }, 1500);
+                }
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes pulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>

@@ -33,24 +33,14 @@
 }
 
 .footer-section h3 {
-  background: linear-gradient(45deg, #a78bfa, #8b5cf6, #7c3aed);
-  background-size: 300% 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 3s ease infinite;
+  color: #000000;
   margin-bottom: 1rem;
   position: relative;
   z-index: 1;
 }
 
 .footer-section h4 {
-  background: linear-gradient(45deg, #a78bfa, #8b5cf6, #7c3aed);
-  background-size: 300% 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 3s ease infinite;
+  color: #000000;
   margin-bottom: 1rem;
   font-size: 1.1rem;
   position: relative;

@@ -7,50 +7,50 @@ const About: React.FC = () => {
       <div className="container">
         <header className="about-header">
           <h1>About Dot Product</h1>
-          <p>Independent tech journalism that cuts through the noise</p>
+          <p>Independent design and engineering analysis for the modern web</p>
         </header>
 
         <section className="mission">
           <div className="mission-content">
             <h2>Our Mission</h2>
             <p>
-              Dot Product exists to provide in-depth, unbiased analysis of engineering advances at 
-              the world's leading technology companies. We believe that understanding how systems 
-              work at scale helps the entire tech community learn and grow.
+              Dot Product provides deep analysis of design systems, frontend architecture, and engineering 
+              patterns that shape modern web experiences. We believe that understanding how successful 
+              design and engineering teams build scalable, maintainable systems helps the entire community grow.
             </p>
             <p>
-              Our writers are experienced engineers and technical journalists who have worked at 
-              FAANG companies and understand the challenges of building systems that serve billions 
-              of users. We're committed to independent journalism, free from corporate influence.
+              Our analysts are experienced designers and engineers who have worked on large-scale 
+              design systems and frontend architectures. We focus on practical analysis that helps teams 
+              make better technical and design decisions, from component API design to state management patterns.
             </p>
           </div>
         </section>
 
         <section className="team">
-          <h2>Our Writers</h2>
+          <h2>Our Analysts</h2>
           <div className="team-grid">
             <div className="team-member">
               <div className="member-avatar">👩‍💻</div>
               <h3>Sarah Chen</h3>
-              <p className="role">Senior AI/ML Writer</p>
-              <p>Former Meta AI researcher with 8 years experience in large language models and distributed training systems.</p>
+              <p className="role">Design Systems Analyst</p>
+              <p>Former design systems lead with 8 years experience building scalable component libraries and design tokens.</p>
             </div>
             <div className="team-member">
               <div className="member-avatar">👨‍💻</div>
               <h3>David Kim</h3>
-              <p className="role">Hardware Systems Writer</p>
-              <p>Ex-Google hardware engineer who worked on Pixel devices and cloud infrastructure optimization.</p>
+              <p className="role">Frontend Architecture Analyst</p>
+              <p>Ex-engineering lead who has built micro-frontend architectures and performance optimization systems.</p>
             </div>
             <div className="team-member">
               <div className="member-avatar">👩‍🔬</div>
               <h3>Dr. Lisa Wang</h3>
-              <p className="role">Computer Vision Writer</p>
-              <p>Former Amazon scientist with PhD in Computer Vision, specialized in real-time image processing at scale.</p>
+              <p className="role">UI/UX Engineering Analyst</p>
+              <p>Former principal engineer with expertise in accessibility, performance, and user experience engineering.</p>
             </div>
             <div className="team-member">
               <div className="member-avatar">👨‍🚀</div>
               <h3>Michael Torres</h3>
-              <p className="role">Infrastructure Writer</p>
+              <p className="role">Infrastructure Analyst</p>
               <p>Former Netflix senior engineer who built content delivery systems serving 260+ million subscribers.</p>
             </div>
           </div>
@@ -61,18 +61,18 @@ const About: React.FC = () => {
           <div className="coffee-content">
             <p>
               Every great engineering breakthrough happens over countless cups of coffee. Our 
-              subscription model ensures our writers can focus on deep research and quality 
-              writing instead of chasing ad revenue or sponsored content.
+              subscription model ensures our analysts can focus on deep research and quality 
+              analysis instead of chasing ad revenue or sponsored content.
             </p>
             <p>
               When you subscribe to our coffee service, you're directly supporting independent 
-              tech journalism. 60% of every subscription goes directly to our writers, 25% covers 
+              tech analysis. 60% of every subscription goes directly to our analysts, 25% covers 
               operational costs, and 15% ensures you get excellent coffee delivered to your door.
             </p>
             <div className="transparency-box">
               <h3>Full Transparency</h3>
               <ul>
-                <li>60% - Direct writer compensation</li>
+                <li>60% - Direct analyst compensation</li>
                 <li>25% - Platform operations & hosting</li>
                 <li>15% - Premium coffee sourcing & shipping</li>
               </ul>

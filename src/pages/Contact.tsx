@@ -44,20 +44,20 @@ const Contact: React.FC = () => {
       <div className="container">
         <header className="contact-header">
           <h1>Contact Dot Product</h1>
-          <p>Get in touch with our editorial team or ask about supporting our writers</p>
+          <p>Get in touch with our design and engineering analysis team or ask about supporting our work</p>
         </header>
 
         <div className="contact-content">
           <div className="contact-info">
             <div className="info-section">
-              <h3>📝 Editorial Team</h3>
-              <p>Have a story tip or want to suggest a topic?</p>
-              <p><strong>Email:</strong> editorial@dotproduct.tech</p>
+              <h3>📝 Content Team</h3>
+              <p>Have a design pattern to analyze or engineering topic to suggest?</p>
+              <p><strong>Email:</strong> content@dotproduct.tech</p>
             </div>
             
             <div className="info-section">
               <h3>☕ Support & Subscriptions</h3>
-              <p>Questions about supporting our writers?</p>
+              <p>Questions about supporting our design and engineering analysis work?</p>
               <p><strong>Email:</strong> support@dotproduct.tech</p>
             </div>
             
@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
             <div className="info-section">
               <h3>⚡ Response Times</h3>
               <ul>
-                <li>Editorial inquiries: 24-48 hours</li>
+                <li>Content inquiries: 24-48 hours</li>
                 <li>Support questions: 4-8 hours</li>
                 <li>General inquiries: 1-2 business days</li>
               </ul>
@@ -128,10 +128,10 @@ const Contact: React.FC = () => {
                   required
                 >
                   <option value="">Select a topic</option>
-                  <option value="editorial">Editorial / Story Tip</option>
+                  <option value="content">Design/Engineering Analysis Suggestion</option>
                   <option value="support">Coffee Subscription Support</option>
                   <option value="partnership">Partnership Opportunity</option>
-                  <option value="feedback">Feedback on Articles</option>
+                  <option value="feedback">Feedback on Analysis</option>
                   <option value="technical">Technical Question</option>
                   <option value="other">Other</option>
                 </select>
@@ -171,20 +171,20 @@ const Contact: React.FC = () => {
           <h2>Frequently Asked Questions</h2>
           <div className="faq-grid">
             <div className="faq-item">
-              <h3>How do I support your writers?</h3>
-              <p>You can support our independent journalism by subscribing to our coffee service. 60% of every subscription goes directly to our writers.</p>
+              <h3>How do I support your analysts?</h3>
+              <p>You can support our independent design and engineering analysis by subscribing to our coffee service. 60% of every subscription goes directly to our content creators.</p>
             </div>
             <div className="faq-item">
               <h3>Do you accept guest articles?</h3>
-              <p>We occasionally accept guest articles from industry experts. Please email our editorial team with your proposal and writing samples.</p>
+              <p>We occasionally accept guest articles from design and engineering experts. Please email our content team with your proposal and writing samples.</p>
             </div>
             <div className="faq-item">
               <h3>Can I request coverage of specific topics?</h3>
-              <p>Absolutely! We welcome suggestions for engineering topics, especially if you have insider knowledge or access to interesting systems.</p>
+              <p>Absolutely! We welcome suggestions for design patterns, engineering architecture, and UI/UX analysis topics.</p>
             </div>
             <div className="faq-item">
               <h3>How do you ensure technical accuracy?</h3>
-              <p>Every article is reviewed by at least two engineers with relevant experience before publication. We also maintain relationships with experts at major tech companies.</p>
+              <p>Every analysis is reviewed by experienced designers and engineers before publication. We focus on evidence-based analysis and real-world design patterns.</p>
             </div>
           </div>
         </section>

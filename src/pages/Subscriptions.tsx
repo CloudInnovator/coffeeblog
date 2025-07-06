@@ -20,14 +20,14 @@ const Subscriptions: React.FC = () => {
       <div className="container">
         <div className="subscriptions-header">
           <h1 className="subscription-title">☕ Support Dot Product</h1>
-          <p className="subscription-subtitle">Help us create amazing tech content with your coffee support!</p>
+          <p className="subscription-subtitle">Help us create amazing tech analysis and meta-analysis with your coffee support!</p>
         </div>
 
         {/* Unified Coffee Support Section */}
         <section className="coffee-support">
           <div className="support-intro">
-            <h2>Fuel Our Tech Journalism with Coffee</h2>
-            <p>Choose your way to support our independent tech content - one cup at a time or with monthly deliveries!</p>
+            <h2>Fuel Our Tech Analysis with Coffee</h2>
+            <p>Choose your way to support our independent research and analysis - one cup at a time or with monthly deliveries!</p>
           </div>
           
           {/* One-Time Coffee Support */}
@@ -85,7 +85,7 @@ const Subscriptions: React.FC = () => {
           {/* Monthly Coffee Subscriptions */}
           <div className="support-section">
             <h3>🔄 Monthly Coffee Subscriptions</h3>
-            <p className="section-desc">Get premium coffee delivered monthly while supporting our content!</p>
+            <p className="section-desc">Get premium coffee delivered monthly while supporting our research!</p>
             <div className="coffee-grid">
               <button 
                 className="coffee-card subscription-coffee" 
@@ -133,13 +133,13 @@ const Subscriptions: React.FC = () => {
               <div className="community-card">
                 <div className="community-icon">📢</div>
                 <h4>Spread the Love</h4>
-                <p>Share our articles with fellow developers</p>
+                <p>Share our analysis with fellow developers</p>
                 <button className="community-btn">Share ☕</button>
               </div>
               <div className="community-card">
                 <div className="community-icon">💡</div>
                 <h4>Suggest Topics</h4>
-                <p>Tell us what tech topics you'd like us to cover</p>
+                <p>Tell us what tech topics you'd like us to analyze</p>
                 <button className="community-btn">Suggest ☕</button>
               </div>
             </div>
@@ -149,10 +149,10 @@ const Subscriptions: React.FC = () => {
           <div className="coffee-thank-you">
             <div className="thank-you-content">
               <div className="coffee-heart">☕❤️</div>
-              <h3>Thank You for Fueling Our Content!</h3>
+              <h3>Thank You for Fueling Our Analysis!</h3>
               <p>
-                Every coffee you buy helps us stay caffeinated and creates better tech journalism. 
-                Your support keeps our content independent, high-quality, and accessible to everyone in the developer community.
+                Every coffee you buy helps us stay caffeinated and creates better tech analysis and meta-analysis. 
+                Your support keeps our research independent, high-quality, and accessible to everyone in the developer community.
               </p>
               <div className="coffee-stats">
                 <div className="stat">
@@ -161,11 +161,11 @@ const Subscriptions: React.FC = () => {
                 </div>
                 <div className="stat">
                   <div className="stat-number">42</div>
-                  <div className="stat-label">Articles published</div>
+                  <div className="stat-label">Analysis reports published</div>
                 </div>
                 <div className="stat">
                   <div className="stat-number">5,678</div>
-                  <div className="stat-label">Developers reading</div>
+                  <div className="stat-label">Researchers reading</div>
                 </div>
               </div>
             </div>
