@@ -129,15 +129,42 @@ const blogPosts: BlogPost[] = [
   }
 ];
 
-const categories = ["All", "Design", "Systems", "UI/UX", "Engineering", "AI/ML", "Performance", "Trends"];
+const categories = ["All", "Design", "Systems", "UI/UX", "Engineering", "AI/ML", "Performance"];
+
+type SortMode = "Newest" | "Oldest" | "Trends";
 
 const Blog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [sortMode, setSortMode] = useState<SortMode>("Newest");
+
+  const toggleSortMode = () => {
+    setSortMode(current => {
+      switch (current) {
+        case "Newest": return "Oldest";
+        case "Oldest": return "Trends";
+        case "Trends": return "Newest";
+        default: return "Newest";
+      }
+    });
+  };
+
+  const getSortedPosts = (posts: BlogPost[]) => {
+    switch (sortMode) {
+      case "Newest":
+        return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      case "Oldest":
+        return [...posts].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      case "Trends":
+        return posts.filter(post => post.category === "Trends");
+      default:
+        return posts;
+    }
+  };
 
   const filteredPosts = selectedCategory === "All" 
-    ? blogPosts 
-    : blogPosts.filter(post => post.category === selectedCategory);
+    ? getSortedPosts(blogPosts)
+    : getSortedPosts(blogPosts.filter(post => post.category === selectedCategory));
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
@@ -154,17 +181,24 @@ const Blog: React.FC = () => {
           <button className="back-btn" onClick={handleBackClick}>
             ← Back to Blog
           </button>
-          <article className="blog-post-full">
-            <header className="post-header">
-              <div className="post-icon">{selectedPost.image}</div>
-              <h1>{selectedPost.title}</h1>
-              <div className="post-meta">
-                <span className="author">By {selectedPost.author}</span>
+          <div className="blog-grid-single">
+            <article className="blog-post-full">
+              <header className="post-header">
+                <div className="post-icon">{selectedPost.image}</div>
+                <h1 className="post-title-full">{selectedPost.title}</h1>
+              </header>
+              <div className="post-meta-full">
+                <span className="author">{selectedPost.author}</span>
                 <span className="date">{new Date(selectedPost.date).toLocaleDateString()}</span>
-                <span className="category">{selectedPost.category}</span>
                 <span className="read-time">{selectedPost.readTime}</span>
+                <span className="category">{selectedPost.category}</span>
               </div>
-              <div className="post-actions">
+              <div className="post-content">
+                <p className="lead">{selectedPost.excerpt}</p>
+                <p>{selectedPost.content}</p>
+                <p>This is a preview of our blog post content. In a full implementation, this would contain the complete article with proper formatting, images, and more detailed content.</p>
+              </div>
+              <div className="post-actions-full">
                 <button className="like-btn">
                   ❤️ Like Article
                 </button>
@@ -176,17 +210,12 @@ const Blog: React.FC = () => {
                   url={`/blog/${selectedPost.id}`}
                 />
               </div>
-            </header>
-            <div className="post-content">
-              <p className="lead">{selectedPost.excerpt}</p>
-              <p>{selectedPost.content}</p>
-              <p>This is a preview of our blog post content. In a full implementation, this would contain the complete article with proper formatting, images, and more detailed content.</p>
-            </div>
-            <ArticleComments 
-              articleId={selectedPost.id.toString()}
-              articleTitle={selectedPost.title}
-            />
-          </article>
+              <ArticleComments 
+                articleId={selectedPost.id.toString()}
+                articleTitle={selectedPost.title}
+              />
+            </article>
+          </div>
         </div>
       </div>
     );
@@ -205,6 +234,13 @@ const Blog: React.FC = () => {
               {category}
             </button>
           ))}
+          <button
+            className={`category-btn sort-btn ${sortMode === 'Trends' ? 'active' : ''}`}
+            onClick={toggleSortMode}
+            title={`Currently: ${sortMode}. Click to cycle through Newest → Oldest → Trends`}
+          >
+            {sortMode}
+          </button>
         </div>
 
         <div className="blog-grid">
