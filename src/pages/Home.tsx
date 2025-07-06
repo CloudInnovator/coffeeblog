@@ -8,13 +8,6 @@ const Home: React.FC = () => {
   return (
     <div className="home">
       <main className="main-content">
-        <section className="hero">
-          <div className="container">
-            <h1>Design & Engineering Analysis</h1>
-            <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
-          </div>
-        </section>
-
         <section className="blog-section">
           <div className="container">
             <div className="posts-grid">

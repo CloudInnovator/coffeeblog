@@ -42,55 +42,7 @@ const Contact: React.FC = () => {
   return (
     <div className="contact">
       <div className="container">
-        <header className="contact-header">
-          <h1>Contact Dot Product</h1>
-          <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
-        </header>
-
         <div className="contact-content">
-          <div className="contact-info">
-            <div className="info-section">
-              <h3>📝 Content Team</h3>
-              <p>Have a design pattern to analyze or engineering topic to suggest?</p>
-              <p><strong>Email:</strong> content@dotproduct.tech</p>
-            </div>
-            
-            <div className="info-section">
-              <h3>☕ Support & Subscriptions</h3>
-              <p>Questions about supporting our design and engineering analysis work?</p>
-              <p><strong>Email:</strong> support@dotproduct.tech</p>
-            </div>
-            
-            <div className="info-section">
-              <h3>🤝 Partnerships</h3>
-              <p>Interested in collaborating?</p>
-              <p><strong>Email:</strong> partnerships@dotproduct.tech</p>
-            </div>
-
-            <div className="info-section">
-              <h3>👋 General Inquiries</h3>
-              <p>For all other questions</p>
-              <p><strong>Email:</strong> hello@dotproduct.tech</p>
-              <p><strong>Phone:</strong> (555) 123-TECH</p>
-            </div>
-
-            <div className="info-section">
-              <h3>🏢 Office</h3>
-              <p>Dot Product HQ<br />
-              123 Tech Street<br />
-              San Francisco, CA 94105</p>
-            </div>
-
-            <div className="info-section">
-              <h3>⚡ Response Times</h3>
-              <ul>
-                <li>Content inquiries: 24-48 hours</li>
-                <li>Support questions: 4-8 hours</li>
-                <li>General inquiries: 1-2 business days</li>
-              </ul>
-            </div>
-          </div>
-
           <div className="contact-form">
             <h2>Send us a message</h2>
             <form onSubmit={handleSubmit}>

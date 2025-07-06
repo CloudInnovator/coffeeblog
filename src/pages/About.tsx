@@ -5,17 +5,12 @@ const About: React.FC = () => {
   return (
     <div className="about">
       <div className="container">
-        <header className="about-header">
-          <h1>About Dot Product</h1>
-          <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
-        </header>
-
         <section className="mission">
           <div className="mission-content">
             <h2>Our Mission</h2>
             <p>
-              Dot Product provides deep analysis of design, systems, engineering, architecture, and technical innovation 
-              that shape modern web experiences. We believe that understanding how successful 
+              Dot Product provides comprehensive technical analysis 
+              that shapes modern web experiences. We believe that understanding how successful 
               design and engineering teams build scalable, maintainable systems helps the entire community grow.
             </p>
             <p>
