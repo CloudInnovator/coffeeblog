@@ -44,7 +44,7 @@ const Contact: React.FC = () => {
       <div className="container">
         <header className="contact-header">
           <h1>Contact Dot Product</h1>
-          <p>Get in touch with our design and engineering analysis team or ask about supporting our work</p>
+          <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
         </header>
 
         <div className="contact-content">

@@ -20,7 +20,7 @@ const Subscriptions: React.FC = () => {
       <div className="container">
         <div className="subscriptions-header">
           <h1 className="subscription-title">☕ Support Dot Product</h1>
-          <p className="subscription-subtitle">Help us create amazing tech analysis and meta-analysis with your coffee support!</p>
+          <p className="subscription-subtitle">Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
         </div>
 
         {/* Unified Coffee Support Section */}

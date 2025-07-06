@@ -186,7 +186,7 @@ const Blog: React.FC = () => {
       <div className="container">
         <header className="blog-header">
           <h1>Design & Engineering Analysis</h1>
-          <p>Deep analysis of design systems, engineering architecture, and technical innovation</p>
+          <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
         </header>
 
         <div className="category-filter">

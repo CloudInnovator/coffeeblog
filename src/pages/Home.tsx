@@ -11,7 +11,7 @@ const Home: React.FC = () => {
         <section className="hero">
           <div className="container">
             <h1>Design & Engineering Analysis</h1>
-            <p>Deep analysis of design systems, frontend architecture, and engineering patterns. Join thousands of designers and developers who rely on our technical insights and systematic analysis.</p>
+            <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
           </div>
         </section>
 
@@ -147,17 +147,6 @@ const Home: React.FC = () => {
                 </div>
               </article>
             </div>
-          </div>
-        </section>
-
-        <section className="newsletter-section">
-          <div className="container">
-            <h2 className="section-title">Stay Updated</h2>
-            <p>Get the latest tech insights delivered to your inbox</p>
-            <form className="newsletter-form">
-              <input type="email" className="newsletter-input" placeholder="Enter your email address" required />
-              <button type="submit" className="newsletter-btn">Subscribe</button>
-            </form>
           </div>
         </section>
       </main>

@@ -7,15 +7,15 @@ const About: React.FC = () => {
       <div className="container">
         <header className="about-header">
           <h1>About Dot Product</h1>
-          <p>Independent design and engineering analysis for the modern web</p>
+          <p>Deep analysis of design, systems, engineering, architecture, and technical innovation</p>
         </header>
 
         <section className="mission">
           <div className="mission-content">
             <h2>Our Mission</h2>
             <p>
-              Dot Product provides deep analysis of design systems, frontend architecture, and engineering 
-              patterns that shape modern web experiences. We believe that understanding how successful 
+              Dot Product provides deep analysis of design, systems, engineering, architecture, and technical innovation 
+              that shape modern web experiences. We believe that understanding how successful 
               design and engineering teams build scalable, maintainable systems helps the entire community grow.
             </p>
             <p>
