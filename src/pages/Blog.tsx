@@ -277,7 +277,12 @@ const Blog: React.FC = () => {
               )}
               <div className="post-content">
                 <h3 className="post-title" onClick={() => handlePostClick(post)}>{post.title}</h3>
-                <p className="post-excerpt">{post.excerpt}</p>
+                <div className="post-article-preview">
+                  {post.imageUrl 
+                    ? post.content.substring(0, 250) + "..."
+                    : post.content.substring(0, 450) + "..."
+                  }
+                </div>
                 <div className="post-category-line">
                   <span className="post-category">{post.category}</span>
                 </div>

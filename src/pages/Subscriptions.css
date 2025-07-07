@@ -261,7 +261,7 @@
 .subscribe-btn, .plan-btn {
   width: 100%;
   padding: 1rem 2rem;
-  background: linear-gradient(45deg, #8B4513, #D2691E);
+  background: #5a67d8;
   color: white;
   border: none;
   border-radius: 50px;
@@ -286,7 +286,7 @@
 
 .subscribe-btn:hover, .plan-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(139, 69, 19, 0.4);
+  box-shadow: 0 10px 25px rgba(90, 103, 216, 0.4);
 }
 
 .subscribe-btn:hover::before, .plan-btn:hover::before {
