@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  isDarkMode?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isDarkMode = false }) => {
   return (
-    <header className="header">
+    <header className={`header ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="container">
         <div className="logo">
           <Link to="/blog">

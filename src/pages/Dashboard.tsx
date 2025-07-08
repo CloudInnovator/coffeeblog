@@ -33,7 +33,11 @@ export interface UserComment {
   username?: string;
 }
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  isDarkMode: boolean;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ isDarkMode }) => {
   const [activeTab, setActiveTab] = useState<'saved' | 'notes' | 'comments' | 'articles' | 'createArticle'>('saved');
   const [savedArticles, setSavedArticles] = useState<SavedArticle[]>([]);
   const [userNotes, setUserNotes] = useState<UserNote[]>([]);
@@ -42,7 +46,7 @@ const Dashboard: React.FC = () => {
   const [noteContent, setNoteContent] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
-  const [showArticleManager, setShowArticleManager] = useState(false);
+
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -185,7 +189,7 @@ const Dashboard: React.FC = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="dashboard">
+      <div className={`dashboard ${isDarkMode ? 'dark-mode' : ''}`}>
         <div className="container">
           <LoginForm />
         </div>
@@ -194,7 +198,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="container">
         <div className="dashboard-header">
           <h1>Dashboard</h1>

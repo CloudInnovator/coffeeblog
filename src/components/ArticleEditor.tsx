@@ -73,28 +73,7 @@ const ArticleEditor: React.FC<ArticleEditorProps> = ({ onSave, onCancel, initial
     }
   }, [article, autoSave, isFormValid]);
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'b') {
-          e.preventDefault();
-          insertFormatting('bold');
-        } else if (e.key === 'i') {
-          e.preventDefault();
-          insertFormatting('italic');
-        } else if (e.key === 's') {
-          e.preventDefault();
-          if (isFormValid) {
-            handleSave();
-          }
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isFormValid]);
+  // Moved useEffect hooks after function declarations
 
   const handleInputChange = (field: keyof ArticleData, value: string) => {
     setArticle(prev => ({ ...prev, [field]: value }));
@@ -317,6 +296,29 @@ const ArticleEditor: React.FC<ArticleEditorProps> = ({ onSave, onCancel, initial
       return null;
     });
   };
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'b') {
+          e.preventDefault();
+          insertFormatting('bold');
+        } else if (e.key === 'i') {
+          e.preventDefault();
+          insertFormatting('italic');
+        } else if (e.key === 's') {
+          e.preventDefault();
+          if (isFormValid) {
+            handleSave();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isFormValid, insertFormatting, handleSave]);
 
   return (
     <div className="article-editor">

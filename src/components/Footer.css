@@ -6,6 +6,12 @@
   position: relative;
 }
 
+/* Dark mode styles for footer */
+.footer.dark-mode {
+  background: #1f2937;
+  border-top: 1px solid #374151;
+}
+
 .footer .container {
   max-width: 1200px;
   margin: 0 auto;

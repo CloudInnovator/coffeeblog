@@ -1,0 +1,86 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import './App.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import NewsletterBar from './components/NewsletterBar';
+import Blog from './pages/Blog';
+import Subscriptions from './pages/Subscriptions';
+import Contact from './pages/Contact';
+import Dashboard from './pages/Dashboard';
+
+const AppContent: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
+
+  return (
+    <div className="App">
+      {!isDashboard && <NewsletterBar isDarkMode={isDarkMode} />}
+      <Header isDarkMode={isDarkMode} />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Blog />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </main>
+      <Footer isDarkMode={isDarkMode} />
+    </div>
+  );
+};
+
+function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Load dark mode preference on app start
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('blogDarkMode');
+    if (savedDarkMode) {
+      setIsDarkMode(JSON.parse(savedDarkMode));
+    }
+  }, []);
+
+  // Listen for dark mode changes from localStorage
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'blogDarkMode' && e.newValue) {
+        setIsDarkMode(JSON.parse(e.newValue));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom event for same-window updates
+    const handleCustomDarkModeChange = (e: CustomEvent) => {
+      setIsDarkMode(e.detail.isDarkMode);
+    };
+
+    window.addEventListener('darkModeChange', handleCustomDarkModeChange as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('darkModeChange', handleCustomDarkModeChange as EventListener);
+    };
+  }, []);
+
+  return (
+    <Router>
+      <AppContent isDarkMode={isDarkMode} />
+    </Router>
+  );
+}
+          <Route path="/" element={<Blog />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </main>
+      <Footer isDarkMode={isDarkMode} />
+    </div>
+  );
+};
+
+export default App;

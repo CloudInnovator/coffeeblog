@@ -4,6 +4,97 @@
   padding: 2rem 0;
 }
 
+/* Dark mode styles for dashboard */
+.dashboard.dark-mode {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .dashboard-header {
+  border-bottom: 2px solid #4b5563;
+}
+
+.dashboard.dark-mode .user-info span {
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .tab-btn {
+  background: #374151;
+  color: #d1d5db;
+  border: 1px solid #4b5563;
+}
+
+.dashboard.dark-mode .tab-btn:hover {
+  background: #4b5563;
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .tab-btn.active {
+  background: #60a5fa;
+  color: #1e293b;
+  border-color: #60a5fa;
+}
+
+.dashboard.dark-mode .empty-state {
+  color: #9ca3af;
+}
+
+.dashboard.dark-mode .empty-state h3 {
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .article-item {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .article-item:hover {
+  background: #4b5563;
+  border-color: #6b7280;
+}
+
+.dashboard.dark-mode .article-item h4 {
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .article-item p {
+  color: #d1d5db;
+}
+
+.dashboard.dark-mode .article-meta span {
+  color: #9ca3af;
+}
+
+.dashboard.dark-mode .remove-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.dashboard.dark-mode .remove-btn:hover {
+  background: #b91c1c;
+}
+
+.dashboard.dark-mode .note-content {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .note-content:focus {
+  border-color: #60a5fa;
+  outline: none;
+}
+
+.dashboard.dark-mode .save-note-btn {
+  background: #10b981;
+  color: white;
+}
+
+.dashboard.dark-mode .save-note-btn:hover {
+  background: #059669;
+}
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;

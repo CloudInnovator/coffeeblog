@@ -8,7 +8,12 @@ interface FormData {
   message: string;
 }
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const Contact: React.FC<ContactProps> = ({ isDarkMode, toggleDarkMode }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -40,7 +45,14 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="contact">
+    <div className={`contact ${isDarkMode ? 'dark-mode' : ''}`}>
+      <button 
+        className="dark-mode-toggle"
+        onClick={toggleDarkMode}
+        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      >
+        {isDarkMode ? '☀️' : '🌙'}
+      </button>
       <div className="container">
         <div className="contact-content">
           <div className="contact-form">

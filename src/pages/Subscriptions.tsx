@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './Subscriptions.css';
 
-const Subscriptions: React.FC = () => {
+interface SubscriptionsProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const Subscriptions: React.FC<SubscriptionsProps> = ({ isDarkMode, toggleDarkMode }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const handleQuickBuy = (amount: string) => {
@@ -16,7 +22,14 @@ const Subscriptions: React.FC = () => {
   };
 
   return (
-    <div className="subscriptions">
+    <div className={`subscriptions ${isDarkMode ? 'dark-mode' : ''}`}>
+      <button 
+        className="dark-mode-toggle"
+        onClick={toggleDarkMode}
+        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      >
+        {isDarkMode ? '☀️' : '🌙'}
+      </button>
       <div className="container">
         {/* Unified Coffee Support Section */}
         <section className="coffee-support">

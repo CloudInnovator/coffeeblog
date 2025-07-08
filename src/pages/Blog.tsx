@@ -137,7 +137,12 @@ const categories = ["All", "Design", "Systems", "UI/UX", "Engineering", "AI/ML",
 
 type SortMode = "Newest" | "Oldest" | "Trends";
 
-const Blog: React.FC = () => {
+interface BlogProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("Newest");
@@ -208,7 +213,14 @@ const Blog: React.FC = () => {
 
   if (selectedPost) {
     return (
-      <div className="blog">
+      <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
+        <button 
+          className="dark-mode-toggle"
+          onClick={toggleDarkMode}
+          title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
         <div className="container">
           <button className="back-btn" onClick={handleBackClick}>
             ← Back to Blog
@@ -264,7 +276,14 @@ const Blog: React.FC = () => {
   }
 
   return (
-    <div className="blog">
+    <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
+      <button 
+        className="dark-mode-toggle"
+        onClick={toggleDarkMode}
+        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      >
+        {isDarkMode ? '☀️' : '🌙'}
+      </button>
       <div className="container">
         <div className="category-filter">
           {categories.map(category => (
