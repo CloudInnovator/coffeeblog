@@ -291,6 +291,139 @@
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
+/* Dark mode styles for Article Manager */
+.dashboard.dark-mode .article-manager {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .article-manager h2 {
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .section-header {
+  color: #f3f4f6;
+  border-bottom: 2px solid #4b5563;
+}
+
+.dashboard.dark-mode .article-list {
+  background: #374151;
+}
+
+.dashboard.dark-mode .article-card {
+  background: #4b5563;
+  border: 1px solid #6b7280;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .article-card:hover {
+  background: #6b7280;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard.dark-mode .article-card h3 {
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .article-card p {
+  color: #d1d5db;
+}
+
+.dashboard.dark-mode .article-meta {
+  color: #9ca3af;
+}
+
+.dashboard.dark-mode .article-status.published {
+  background: #10b981;
+  color: white;
+}
+
+.dashboard.dark-mode .article-status.draft {
+  background: #f59e0b;
+  color: white;
+}
+
+.dashboard.dark-mode .article-actions .edit-btn {
+  background: #60a5fa;
+  color: white;
+}
+
+.dashboard.dark-mode .article-actions .edit-btn:hover {
+  background: #3b82f6;
+}
+
+.dashboard.dark-mode .article-actions .publish-btn {
+  background: #10b981;
+  color: white;
+}
+
+.dashboard.dark-mode .article-actions .publish-btn:hover {
+  background: #059669;
+}
+
+.dashboard.dark-mode .article-actions .unpublish-btn {
+  background: #f59e0b;
+  color: white;
+}
+
+.dashboard.dark-mode .article-actions .unpublish-btn:hover {
+  background: #d97706;
+}
+
+.dashboard.dark-mode .article-actions .delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.dashboard.dark-mode .article-actions .delete-btn:hover {
+  background: #dc2626;
+}
+
+.dashboard.dark-mode .inline-edit-form {
+  background: #4b5563;
+  border: 1px solid #6b7280;
+}
+
+.dashboard.dark-mode .inline-edit-form input,
+.dashboard.dark-mode .inline-edit-form textarea {
+  background: #374151;
+  border: 1px solid #6b7280;
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .inline-edit-form input:focus,
+.dashboard.dark-mode .inline-edit-form textarea:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.dashboard.dark-mode .inline-edit-form .save-edit-btn {
+  background: #10b981;
+  color: white;
+}
+
+.dashboard.dark-mode .inline-edit-form .save-edit-btn:hover {
+  background: #059669;
+}
+
+.dashboard.dark-mode .inline-edit-form .cancel-edit-btn {
+  background: #6b7280;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .inline-edit-form .cancel-edit-btn:hover {
+  background: #9ca3af;
+}
+
+.dashboard.dark-mode .empty-state {
+  color: #9ca3af;
+}
+
+.dashboard.dark-mode .empty-state h3 {
+  color: #e5e7eb;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .manager-controls {

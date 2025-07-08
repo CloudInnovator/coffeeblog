@@ -452,6 +452,118 @@
   color: #374151;
 }
 
+/* Dark mode styles for Article Editor */
+.dashboard.dark-mode .article-editor {
+  background: #374151;
+  border: 1px solid #4b5563;
+}
+
+.dashboard.dark-mode .article-editor h2 {
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .form-group label {
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .form-group input,
+.dashboard.dark-mode .form-group select,
+.dashboard.dark-mode .form-group textarea {
+  background: #4b5563;
+  border: 1px solid #6b7280;
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .form-group input:focus,
+.dashboard.dark-mode .form-group select:focus,
+.dashboard.dark-mode .form-group textarea:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.dashboard.dark-mode .form-group input::placeholder,
+.dashboard.dark-mode .form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+.dashboard.dark-mode .editor-toolbar {
+  background: #4b5563;
+  border: 1px solid #6b7280;
+}
+
+.dashboard.dark-mode .toolbar-btn {
+  background: #374151;
+  color: #e5e7eb;
+  border: 1px solid #6b7280;
+}
+
+.dashboard.dark-mode .toolbar-btn:hover {
+  background: #6b7280;
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .toolbar-btn.active {
+  background: #60a5fa;
+  color: #1e293b;
+  border-color: #60a5fa;
+}
+
+.dashboard.dark-mode .editor-container {
+  background: #374151;
+  border: 1px solid #4b5563;
+}
+
+.dashboard.dark-mode .editor-container textarea {
+  background: #4b5563;
+  color: #f3f4f6;
+  border: none;
+}
+
+.dashboard.dark-mode .preview-container {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #e5e7eb;
+}
+
+.dashboard.dark-mode .preview-container h1,
+.dashboard.dark-mode .preview-container h2,
+.dashboard.dark-mode .preview-container h3 {
+  color: #f3f4f6;
+}
+
+.dashboard.dark-mode .save-draft-btn {
+  background: #4b5563;
+  color: #e5e7eb;
+  border: 1px solid #6b7280;
+}
+
+.dashboard.dark-mode .save-draft-btn:hover {
+  background: #6b7280;
+}
+
+.dashboard.dark-mode .publish-btn {
+  background: #10b981;
+  color: white;
+}
+
+.dashboard.dark-mode .publish-btn:hover {
+  background: #059669;
+}
+
+.dashboard.dark-mode .cancel-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.dashboard.dark-mode .cancel-btn:hover {
+  background: #dc2626;
+}
+
+.dashboard.dark-mode .editor-actions {
+  background: #374151;
+  border-top: 1px solid #4b5563;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .editor-header {

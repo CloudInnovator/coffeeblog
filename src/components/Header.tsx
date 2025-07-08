@@ -4,9 +4,10 @@ import './Header.css';
 
 interface HeaderProps {
   isDarkMode?: boolean;
+  toggleDarkMode?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ isDarkMode = false }) => {
+const Header: React.FC<HeaderProps> = ({ isDarkMode = false, toggleDarkMode }) => {
   return (
     <header className={`header ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="container">
@@ -22,7 +23,17 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode = false }) => {
             <li><Link to="/contact" className="nav-link">Contact</Link></li>
           </ul>
           <div className="nav-buttons">
-            <Link to="/subscriptions" className="buy-coffee-btn">Buy Me Coffee ☕</Link>
+            <Link to="/donations" className="buy-coffee-btn">Buy Me Coffee ☕</Link>
+            <Link to="/subscriptions" className="subscription-btn">Subscribe</Link>
+            {toggleDarkMode && (
+              <button 
+                className="dark-mode-toggle nav-toggle"
+                onClick={toggleDarkMode}
+                title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+            )}
           </div>
         </nav>
       </div>

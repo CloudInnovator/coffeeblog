@@ -46,13 +46,6 @@ const Contact: React.FC<ContactProps> = ({ isDarkMode, toggleDarkMode }) => {
 
   return (
     <div className={`contact ${isDarkMode ? 'dark-mode' : ''}`}>
-      <button 
-        className="dark-mode-toggle"
-        onClick={toggleDarkMode}
-        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      >
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
       <div className="container">
         <div className="contact-content">
           <div className="contact-form">

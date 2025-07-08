@@ -1,4 +1,4 @@
-.subscriptions {
+.donations {
   padding: 4rem 2rem;
   min-height: 100vh;
   background: linear-gradient(135deg, #8B4513 0%, #CD853F 25%, #D2691E 50%, #DEB887 75%, #F4A460 100%);
@@ -6,7 +6,7 @@
   position: relative;
 }
 
-.subscriptions::before {
+.donations::before {
   content: '';
   position: absolute;
   top: 0;
@@ -30,7 +30,7 @@
   margin: 0 auto;
 }
 
-.subscriptions-header {
+.donations-header {
   text-align: center;
   margin-bottom: 4rem;
 }
@@ -62,7 +62,7 @@
   line-height: 1.6;
 }
 
-.subscriptions-header p {
+.donations-header p {
   font-size: 1.2rem;
   color: #666;
   max-width: 800px;
@@ -619,28 +619,28 @@
 }
 
 /* Dark mode styles */
-.subscriptions.dark-mode {
+.donations.dark-mode {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: #ffffff;
 }
 
-.subscriptions.dark-mode::before {
+.donations.dark-mode::before {
   background: radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.1) 0%, transparent 50%),
               radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
               radial-gradient(circle at 40% 40%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
 }
 
-.subscriptions.dark-mode .dark-mode-toggle {
+.donations.dark-mode .dark-mode-toggle {
   background: rgba(30, 30, 30, 0.9);
   border-color: #60a5fa;
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .dark-mode-toggle:hover {
+.donations.dark-mode .dark-mode-toggle:hover {
   box-shadow: 0 5px 15px rgba(96, 165, 250, 0.3);
 }
 
-.subscriptions.dark-mode .subscription-title {
+.donations.dark-mode .subscription-title {
   background: linear-gradient(45deg, #ffffff, #e5e7eb, #60a5fa, #93c5fd);
   background-size: 300% 300%;
   background-clip: text;
@@ -648,91 +648,91 @@
   -webkit-text-fill-color: transparent;
 }
 
-.subscriptions.dark-mode .coffee-card {
+.donations.dark-mode .coffee-card {
   background: rgba(55, 65, 81, 0.9);
   border: 1px solid #ffffff;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-.subscriptions.dark-mode .coffee-card:hover {
+.donations.dark-mode .coffee-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
-.subscriptions.dark-mode .coffee-card h3 {
+.donations.dark-mode .coffee-card h3 {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .coffee-card .price {
+.donations.dark-mode .coffee-card .price {
   color: #60a5fa;
 }
 
-.subscriptions.dark-mode .coffee-card .description {
+.donations.dark-mode .coffee-card .description {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .coffee-card .btn-coffee {
+.donations.dark-mode .coffee-card .btn-coffee {
   background: #60a5fa;
   color: #1e293b;
   border: 1px solid #ffffff;
 }
 
-.subscriptions.dark-mode .coffee-card .btn-coffee:hover {
+.donations.dark-mode .coffee-card .btn-coffee:hover {
   background: #3b82f6;
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(96, 165, 250, 0.4);
 }
 
-.subscriptions.dark-mode .plan-card {
+.donations.dark-mode .plan-card {
   background: rgba(55, 65, 81, 0.9);
   border: 1px solid #ffffff;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-.subscriptions.dark-mode .plan-card:hover {
+.donations.dark-mode .plan-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
-.subscriptions.dark-mode .plan-card h3 {
+.donations.dark-mode .plan-card h3 {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .plan-card .price {
+.donations.dark-mode .plan-card .price {
   color: #60a5fa;
 }
 
-.subscriptions.dark-mode .plan-card .features li {
+.donations.dark-mode .plan-card .features li {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .plan-card .btn-subscribe {
+.donations.dark-mode .plan-card .btn-subscribe {
   background: #60a5fa;
   color: #1e293b;
   border: 1px solid #ffffff;
 }
 
-.subscriptions.dark-mode .plan-card .btn-subscribe:hover {
+.donations.dark-mode .plan-card .btn-subscribe:hover {
   background: #3b82f6;
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(96, 165, 250, 0.4);
 }
 
-.subscriptions.dark-mode .support-intro h2 {
+.donations.dark-mode .support-intro h2 {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .support-intro p {
+.donations.dark-mode .support-intro p {
   color: #ffffff;
 }
 
-.subscriptions.dark-mode .section-title {
+.donations.dark-mode .section-title {
   color: #ffffff;
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .subscriptions {
+  .donations {
     padding: 2rem 1rem;
   }
   

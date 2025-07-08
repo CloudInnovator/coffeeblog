@@ -214,13 +214,6 @@ const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
   if (selectedPost) {
     return (
       <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
-        <button 
-          className="dark-mode-toggle"
-          onClick={toggleDarkMode}
-          title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        >
-          {isDarkMode ? '☀️' : '🌙'}
-        </button>
         <div className="container">
           <button className="back-btn" onClick={handleBackClick}>
             ← Back to Blog
@@ -277,13 +270,6 @@ const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
 
   return (
     <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
-      <button 
-        className="dark-mode-toggle"
-        onClick={toggleDarkMode}
-        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      >
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
       <div className="container">
         <div className="category-filter">
           {categories.map(category => (

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import NewsletterBar from "./components/NewsletterBar";
 import Blog from "./pages/Blog";
-import Subscriptions from "./pages/Subscriptions";
+import Donations from "./pages/Donations";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 
@@ -21,19 +20,16 @@ interface AppContentProps {
 }
 
 const AppContent: React.FC<AppContentProps> = ({ isDarkMode, toggleDarkMode }) => {
-  const location = useLocation();
-  const isDashboard = location.pathname === "/dashboard";
-
   return (
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
       <div className={`App ${isDarkMode ? "dark-mode" : ""}`}>
-        {!isDashboard && <NewsletterBar isDarkMode={isDarkMode} />}
-        <Header isDarkMode={isDarkMode} />
+        <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Blog isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             <Route path="/blog" element={<Blog isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
-            <Route path="/subscriptions" element={<Subscriptions isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
+            <Route path="/donations" element={<Donations isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
+            <Route path="/subscriptions" element={<Donations isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             <Route path="/contact" element={<Contact isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             <Route path="/dashboard" element={<Dashboard isDarkMode={isDarkMode} />} />
           </Routes>

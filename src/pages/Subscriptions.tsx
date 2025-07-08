@@ -7,178 +7,175 @@ interface SubscriptionsProps {
 }
 
 const Subscriptions: React.FC<SubscriptionsProps> = ({ isDarkMode, toggleDarkMode }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [showCategorySelection, setShowCategorySelection] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleQuickBuy = (amount: string) => {
-    // Simulate payment processing
-    alert(`Thank you for buying me a ${amount} coffee! ☕`);
+  const categories = [
+    'Design Systems',
+    'Engineering', 
+    'Architecture',
+    'Performance',
+    'AI/ML',
+    'UI/UX',
+    'Trends',
+    'All Categories'
+  ];
+
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setShowCategorySelection(true);
+    }
   };
 
-  const handleSubscription = (plan: string) => {
-    setSelectedPlan(plan);
-    // Simulate subscription setup
-    alert(`Thank you for subscribing to ${plan}! You'll be redirected to payment setup.`);
+  const handleCategoryToggle = (category: string) => {
+    if (category === 'All Categories') {
+      setSelectedCategories(selectedCategories.includes('All Categories') ? [] : ['All Categories']);
+    } else {
+      setSelectedCategories(prev => {
+        const newCategories = prev.filter(cat => cat !== 'All Categories');
+        return prev.includes(category)
+          ? newCategories.filter(cat => cat !== category)
+          : [...newCategories, category];
+      });
+    }
   };
+
+  const handleSubscribe = () => {
+    if (selectedCategories.length > 0) {
+      const subscriptionData = {
+        email,
+        categories: selectedCategories,
+        subscribedAt: new Date().toISOString()
+      };
+      
+      const existingSubscriptions = JSON.parse(localStorage.getItem('emailSubscriptions') || '[]');
+      const updatedSubscriptions = [...existingSubscriptions, subscriptionData];
+      localStorage.setItem('emailSubscriptions', JSON.stringify(updatedSubscriptions));
+      
+      setIsSubscribed(true);
+      setTimeout(() => {
+        setIsSubscribed(false);
+        setEmail('');
+        setSelectedCategories([]);
+        setShowCategorySelection(false);
+      }, 3000);
+    }
+  };
+
+  if (isSubscribed) {
+    return (
+      <div className={`subscriptions ${isDarkMode ? 'dark-mode' : ''}`}>
+        <div className="container">
+          <div className="success-message">
+            <div className="success-icon">✅</div>
+            <h2>Successfully Subscribed!</h2>
+            <p>Thank you for subscribing to our tech insights. You'll receive notifications for:</p>
+            <ul className="subscribed-categories">
+              {selectedCategories.map(category => (
+                <li key={category}>{category}</li>
+              ))}
+            </ul>
+            <p>Check your email for confirmation.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showCategorySelection) {
+    return (
+      <div className={`subscriptions ${isDarkMode ? 'dark-mode' : ''}`}>
+        <div className="container">
+          <div className="category-selection">
+            <h2>Choose Your Interests</h2>
+            <p>Select the categories you'd like to receive notifications about:</p>
+            <div className="email-display">
+              <span>Subscribing: {email}</span>
+              <button 
+                className="edit-email-btn"
+                onClick={() => setShowCategorySelection(false)}
+              >
+                Edit Email
+              </button>
+            </div>
+            
+            <div className="categories-grid">
+              {categories.map(category => (
+                <label key={category} className="category-option">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => handleCategoryToggle(category)}
+                  />
+                  <span className="category-label">{category}</span>
+                </label>
+              ))}
+            </div>
+            
+            <div className="subscription-actions">
+              <button
+                className="subscribe-btn"
+                onClick={handleSubscribe}
+                disabled={selectedCategories.length === 0}
+              >
+                Subscribe to Selected Categories
+              </button>
+              <button
+                className="back-btn"
+                onClick={() => setShowCategorySelection(false)}
+              >
+                Back to Email
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`subscriptions ${isDarkMode ? 'dark-mode' : ''}`}>
-      <button 
-        className="dark-mode-toggle"
-        onClick={toggleDarkMode}
-        title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-      >
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
       <div className="container">
-        {/* Unified Coffee Support Section */}
-        <section className="coffee-support">
-          <div className="support-intro">
-            <h2>Fuel Our Tech Analysis with Coffee</h2>
-            <p>Choose your way to support our independent research and analysis - one cup at a time or with monthly deliveries!</p>
+        <div className="subscription-form">
+          <div className="subscription-header">
+            <h1>Stay Updated with Tech Insights</h1>
+            <p>Get notified when we publish new analysis and insights on design systems, engineering practices, and emerging tech trends.</p>
           </div>
           
-          {/* One-Time Coffee Support */}
-          <div className="support-section">
-            <h3>🚀 One-Time Coffee Support</h3>
-            <div className="coffee-grid">
-              <button 
-                className="coffee-card quick-coffee" 
-                onClick={() => handleQuickBuy('$3')}
-              >
-                <div className="coffee-icon">☕</div>
-                <div className="coffee-amount">$3</div>
-                <div className="coffee-label">Quick Espresso</div>
-                <div className="coffee-desc">One-time support</div>
-              </button>
-              
-              <button 
-                className="coffee-card quick-coffee featured" 
-                onClick={() => handleQuickBuy('$5')}
-              >
-                <div className="coffee-icon">☕☕</div>
-                <div className="coffee-amount">$5</div>
-                <div className="coffee-label">Double Shot</div>
-                <div className="coffee-desc">Most popular</div>
-                <div className="popular-badge">⭐ Popular</div>
-              </button>
-              
-              <button 
-                className="coffee-card quick-coffee" 
-                onClick={() => handleQuickBuy('$10')}
-              >
-                <div className="coffee-icon">☕🍰</div>
-                <div className="coffee-amount">$10</div>
-                <div className="coffee-label">Coffee & Pastry</div>
-                <div className="coffee-desc">Extra generous</div>
-              </button>
-              
-              <button 
-                className="coffee-card quick-coffee custom" 
-                onClick={() => {
-                  const amount = prompt('Enter your custom coffee amount ($):');
-                  if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
-                    handleQuickBuy(`$${amount}`);
-                  }
-                }}
-              >
-                <div className="coffee-icon">💝</div>
-                <div className="coffee-amount">Custom</div>
-                <div className="coffee-label">Your Choice</div>
-                <div className="coffee-desc">Any amount</div>
+          <form onSubmit={handleEmailSubmit} className="email-form">
+            <div className="email-input-group">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="email-input"
+                required
+              />
+              <button type="submit" className="continue-btn">
+                Continue →
               </button>
             </div>
+          </form>
+          
+          <div className="subscription-benefits">
+            <h3>What you'll get:</h3>
+            <ul>
+              <li>📧 Email notifications for new publications</li>
+              <li>🎯 Customized content based on your interests</li>
+              <li>🚀 Early access to in-depth technical analysis</li>
+              <li>💡 Insights on design systems and engineering practices</li>
+              <li>🔄 Unsubscribe anytime</li>
+            </ul>
           </div>
-
-          {/* Monthly Coffee Subscriptions */}
-          <div className="support-section">
-            <h3>🔄 Monthly Coffee Subscriptions</h3>
-            <p className="section-desc">Get premium coffee delivered monthly while supporting our research!</p>
-            <div className="coffee-grid">
-              <button 
-                className="coffee-card subscription-coffee" 
-                onClick={() => handleSubscription('Monthly Espresso')}
-              >
-                <div className="coffee-icon">☕</div>
-                <div className="coffee-amount">$5</div>
-                <div className="coffee-label">Monthly Espresso</div>
-                <div className="coffee-desc">Basic support</div>
-              </button>
-              
-              <button 
-                className="coffee-card subscription-coffee featured" 
-                onClick={() => handleSubscription('Daily Brew')}
-              >
-                <div className="coffee-icon">☕☕</div>
-                <div className="coffee-amount">$10</div>
-                <div className="coffee-label">Daily Brew</div>
-                <div className="coffee-desc">Best value</div>
-                <div className="popular-badge">🏆 Best Value</div>
-              </button>
-              
-              <button 
-                className="coffee-card subscription-coffee premium" 
-                onClick={() => handleSubscription('Coffee Connoisseur')}
-              >
-                <div className="coffee-icon">☕🥐</div>
-                <div className="coffee-amount">$25</div>
-                <div className="coffee-label">Coffee Connoisseur</div>
-                <div className="coffee-desc">Premium blend</div>
-              </button>
-            </div>
+          
+          <div className="privacy-note">
+            <p>We respect your privacy. Your email will only be used for publication notifications and you can unsubscribe at any time.</p>
           </div>
-
-          {/* Coffee Community Section */}
-          <div className="coffee-community">
-            <h3>☕ Join the Coffee Community</h3>
-            <div className="community-grid">
-              <div className="community-card">
-                <div className="community-icon">💻</div>
-                <h4>GitHub Sponsorship</h4>
-                <p>Sponsor our open-source coffee fund through GitHub</p>
-                <button className="community-btn">Sponsor ☕</button>
-              </div>
-              <div className="community-card">
-                <div className="community-icon">📢</div>
-                <h4>Spread the Love</h4>
-                <p>Share our analysis with fellow developers</p>
-                <button className="community-btn">Share ☕</button>
-              </div>
-              <div className="community-card">
-                <div className="community-icon">💡</div>
-                <h4>Suggest Topics</h4>
-                <p>Tell us what tech topics you'd like us to analyze</p>
-                <button className="community-btn">Suggest ☕</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Thank You Section */}
-          <div className="coffee-thank-you">
-            <div className="thank-you-content">
-              <div className="coffee-heart">☕❤️</div>
-              <h3>Thank You for Fueling Our Analysis!</h3>
-              <p>
-                Every coffee you buy helps us stay caffeinated and creates better tech analysis and meta-analysis. 
-                Your support keeps our research independent, high-quality, and accessible to everyone in the developer community.
-              </p>
-              <div className="coffee-stats">
-                <div className="stat">
-                  <div className="stat-number">1,234</div>
-                  <div className="stat-label">Coffees this month</div>
-                </div>
-                <div className="stat">
-                  <div className="stat-number">42</div>
-                  <div className="stat-label">Analysis reports published</div>
-                </div>
-                <div className="stat">
-                  <div className="stat-number">5,678</div>
-                  <div className="stat-label">Researchers reading</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
   );
