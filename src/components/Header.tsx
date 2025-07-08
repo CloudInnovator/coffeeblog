@@ -18,7 +18,6 @@ const Header: React.FC = () => {
             <li><Link to="/contact" className="nav-link">Contact</Link></li>
           </ul>
           <div className="nav-buttons">
-            <button className="newsletter-btn">Newsletter 📧</button>
             <Link to="/subscriptions" className="buy-coffee-btn">Buy Me Coffee ☕</Link>
           </div>
         </nav>

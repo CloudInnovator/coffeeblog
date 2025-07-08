@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SaveArticleButton from '../components/SaveArticleButton';
 import LikeButton from '../components/LikeButton';
 import ArticleComments from '../components/ArticleComments';
@@ -141,6 +141,31 @@ const Blog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("Newest");
+  const [userArticles, setUserArticles] = useState<BlogPost[]>([]);
+
+  // Load user articles from localStorage
+  useEffect(() => {
+    const savedArticles = localStorage.getItem('userArticles');
+    if (savedArticles) {
+      const articles = JSON.parse(savedArticles);
+      // Only show published articles and convert to BlogPost format
+      const publishedArticles = articles
+        .filter((article: any) => article.published)
+        .map((article: any) => ({
+          id: parseInt(article.id),
+          title: article.title,
+          excerpt: article.excerpt,
+          content: article.content,
+          author: article.author,
+          date: article.date,
+          category: article.category,
+          readTime: article.readTime,
+          image: article.image,
+          imageUrl: article.imageUrl
+        }));
+      setUserArticles(publishedArticles);
+    }
+  }, []);
 
   const toggleSortMode = () => {
     setSortMode(current => {
@@ -166,9 +191,12 @@ const Blog: React.FC = () => {
     }
   };
 
+  // Combine default blog posts with user articles
+  const allPosts = [...blogPosts, ...userArticles];
+
   const filteredPosts = selectedCategory === "All" 
-    ? getSortedPosts(blogPosts)
-    : getSortedPosts(blogPosts.filter(post => post.category === selectedCategory));
+    ? getSortedPosts(allPosts)
+    : getSortedPosts(allPosts.filter(post => post.category === selectedCategory));
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);

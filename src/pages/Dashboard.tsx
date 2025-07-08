@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ArticleEditor from '../components/ArticleEditor';
+import ArticleManager from '../components/ArticleManager';
+import { ArticleData } from '../components/ArticleEditor';
 import './Dashboard.css';
 
 export interface SavedArticle {
@@ -31,7 +34,7 @@ export interface UserComment {
 }
 
 const Dashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'saved' | 'notes' | 'comments'>('saved');
+  const [activeTab, setActiveTab] = useState<'saved' | 'notes' | 'comments' | 'articles' | 'createArticle'>('saved');
   const [savedArticles, setSavedArticles] = useState<SavedArticle[]>([]);
   const [userNotes, setUserNotes] = useState<UserNote[]>([]);
   const [userComments, setUserComments] = useState<UserComment[]>([]);
@@ -39,6 +42,7 @@ const Dashboard: React.FC = () => {
   const [noteContent, setNoteContent] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [showArticleManager, setShowArticleManager] = useState(false);
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -67,6 +71,23 @@ const Dashboard: React.FC = () => {
     setIsLoggedIn(false);
     setUsername('');
     localStorage.removeItem('currentUser');
+  };
+
+  // Handle saving new articles
+  const handleSaveArticle = (article: ArticleData) => {
+    const existingArticles = JSON.parse(localStorage.getItem('userArticles') || '[]');
+    const newArticle = {
+      ...article,
+      id: article.id || Date.now().toString(),
+      date: new Date().toISOString(),
+      saved: true
+    };
+    
+    existingArticles.push(newArticle);
+    localStorage.setItem('userArticles', JSON.stringify(existingArticles));
+    
+    // Show success message and switch to articles tab
+    setActiveTab('articles');
   };
 
   const removeArticle = (articleId: string) => {
@@ -188,19 +209,31 @@ const Dashboard: React.FC = () => {
             className={`tab-btn ${activeTab === 'saved' ? 'active' : ''}`}
             onClick={() => setActiveTab('saved')}
           >
-            Saved Articles ({savedArticles.length})
+            📖 Saved Articles ({savedArticles.length})
           </button>
           <button 
             className={`tab-btn ${activeTab === 'notes' ? 'active' : ''}`}
             onClick={() => setActiveTab('notes')}
           >
-            My Notes ({userNotes.length})
+            📝 My Notes ({userNotes.length})
           </button>
           <button 
             className={`tab-btn ${activeTab === 'comments' ? 'active' : ''}`}
             onClick={() => setActiveTab('comments')}
           >
-            My Comments ({userComments.length})
+            💬 My Comments ({userComments.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'createArticle' ? 'active' : ''}`}
+            onClick={() => setActiveTab('createArticle')}
+          >
+            ✍️ Create Article
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'articles' ? 'active' : ''}`}
+            onClick={() => setActiveTab('articles')}
+          >
+            📚 Manage Articles
           </button>
         </div>
 
@@ -375,6 +408,23 @@ const Dashboard: React.FC = () => {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'createArticle' && (
+          <div className="create-article-section">
+            <ArticleEditor
+              onSave={handleSaveArticle}
+              onCancel={() => setActiveTab('saved')}
+            />
+          </div>
+        )}
+
+        {activeTab === 'articles' && (
+          <div className="manage-articles-section">
+            <ArticleManager
+              onClose={() => setActiveTab('saved')}
+            />
           </div>
         )}
       </div>
