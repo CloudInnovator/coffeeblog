@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Subscriptions.css';
 
 interface SubscriptionsProps {
@@ -11,6 +11,16 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({ isDarkMode, toggleDarkMod
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showCategorySelection, setShowCategorySelection] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  // Check for email query parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    if (emailParam) {
+      setEmail(emailParam);
+      setShowCategorySelection(true);
+    }
+  }, []);
 
   const categories = [
     'Design Systems',

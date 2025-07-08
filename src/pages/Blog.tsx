@@ -140,13 +140,23 @@ type SortMode = "Newest" | "Oldest" | "Trends";
 interface BlogProps {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+  onClearSearch?: () => void;
 }
 
-const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
+const Blog: React.FC<BlogProps> = ({ 
+  isDarkMode, 
+  toggleDarkMode, 
+  searchQuery: externalSearchQuery = "",
+  onSearchChange: externalOnSearchChange,
+  onClearSearch: externalOnClearSearch
+}) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("Newest");
   const [userArticles, setUserArticles] = useState<BlogPost[]>([]);
+  const [searchQuery, setSearchQuery] = useState(externalSearchQuery);
 
   // Load user articles from localStorage
   useEffect(() => {
@@ -171,6 +181,11 @@ const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
       setUserArticles(publishedArticles);
     }
   }, []);
+
+  // Sync external search query
+  useEffect(() => {
+    setSearchQuery(externalSearchQuery);
+  }, [externalSearchQuery]);
 
   const toggleSortMode = () => {
     setSortMode(current => {
@@ -199,9 +214,36 @@ const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
   // Combine default blog posts with user articles
   const allPosts = [...blogPosts, ...userArticles];
 
+  // Filter posts based on search query
+  const searchFilteredPosts = searchQuery.trim() === "" 
+    ? allPosts
+    : allPosts.filter(post => 
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+  // Apply category filter to search results
   const filteredPosts = selectedCategory === "All" 
-    ? getSortedPosts(allPosts)
-    : getSortedPosts(allPosts.filter(post => post.category === selectedCategory));
+    ? getSortedPosts(searchFilteredPosts)
+    : getSortedPosts(searchFilteredPosts.filter(post => post.category === selectedCategory));
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    if (externalOnSearchChange) {
+      externalOnSearchChange(query);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    if (externalOnClearSearch) {
+      externalOnClearSearch();
+    }
+  };
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post);
@@ -271,6 +313,14 @@ const Blog: React.FC<BlogProps> = ({ isDarkMode, toggleDarkMode }) => {
   return (
     <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="container">
+        {searchQuery && (
+          <div className="search-results-info">
+            Found {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''} 
+            for "{searchQuery}"
+            {selectedCategory !== "All" && ` in ${selectedCategory}`}
+          </div>
+        )}
+
         <div className="category-filter">
           {categories.map(category => (
             <button
