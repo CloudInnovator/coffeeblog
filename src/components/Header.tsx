@@ -86,34 +86,19 @@ const Header: React.FC<HeaderProps> = ({
               <li><Link to="/contact" className="nav-link">Contact</Link></li>
             </ul>
           </nav>
+          
+         
         </div>
 
-        <div className="header-center">
-          {showSearch && (
-            <div className="header-search">
-              <div className="search-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="header-search-input"
-                />
-                {searchQuery && (
-                  <button 
-                    className="clear-search-btn"
-                    onClick={clearSearch}
-                    title="Clear search"
-                  >
-                    ×
-                  </button>
-                )}
-                <div className="search-icon">🔍</div>
-              </div>
-            </div>
-          )}
-          
-          <div className="subscription-component">
+
+
+        
+        
+
+        <div className="header-right">
+
+
+                   <div className="subscription-component">
             <form onSubmit={handleSubscribeSubmit} className="subscribe-form">
               <div className="email-input-container">
                 <input
@@ -139,10 +124,7 @@ const Header: React.FC<HeaderProps> = ({
               </div>
             )}
           </div>
-        </div>
-
-        <div className="header-right">
-          <Link to="/donations" className="buy-coffee-btn">Buy Me Coffee ☕</Link>
+          <Link to="/donations" className="buy-coffee-btn">Buy Me ☕</Link>
           
           {toggleDarkMode && (
             <button 
@@ -154,6 +136,7 @@ const Header: React.FC<HeaderProps> = ({
             </button>
           )}
         </div>
+          
       </div>
     </header>
   );

@@ -34,12 +34,12 @@
 }
 
 .header .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0.5rem 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
   gap: 2rem;
 }
 
@@ -75,6 +75,20 @@
   align-items: center;
   gap: 1rem;
   flex-shrink: 0;
+  flex-wrap: nowrap;
+  margin-left: -12px;
+}
+
+.header-right > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-right .buy-coffee-btn {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .nav-left {
@@ -95,6 +109,7 @@
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  font-size: 1rem;
   transition: color 0.3s ease;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -144,8 +159,12 @@
   transition: transform 0.3s, box-shadow 0.3s;
   display: inline-block;
   font-family: inherit;
-  font-size: inherit;
+  font-size: 1rem;
   line-height: inherit;
+}
+
+.buy-coffee-btn {
+  padding: 0.533rem 1.5rem;
 }
 
 .buy-coffee-btn:hover, .subscribe-btn:hover {
@@ -195,6 +214,7 @@
   justify-content: center;
   min-width: 3rem;
   height: 2.5rem;
+  align-self: center;
 }
 
 .dark-mode-toggle:hover {
@@ -273,10 +293,10 @@
 
 .subscribe-email-input {
   border: none;
-  padding: 0.75rem 1rem;
+  padding: 0.533rem 0.667rem;
   outline: none;
-  font-size: 0.9rem;
-  width: 250px;
+  font-size: 0.667rem;
+  width: 200px;
   background: transparent;
   transition: all 0.3s ease;
 }
@@ -290,12 +310,12 @@
   background: #5a67d8;
   color: white;
   border: none;
-  padding: 0.75rem 1.25rem;
+  padding: 0.533rem 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
-  font-size: 0.9rem;
-  min-width: 100px;
+  font-size: 1rem;
+  min-width: 67px;
 }
 
 .subscribe-submit-btn:hover:not(:disabled) {
@@ -467,7 +487,7 @@
   }
   
   .subscribe-email-input {
-    width: 150px;
+    width: 180px;
   }
   
   .header-center {
@@ -514,7 +534,7 @@
   }
   
   .subscribe-email-input {
-    width: 180px;
+    width: 200px;
   }
 }
 
@@ -529,7 +549,7 @@
   }
   
   .subscribe-email-input {
-    width: 150px;
+    width: 180px;
   }
   
   .logo h1 {

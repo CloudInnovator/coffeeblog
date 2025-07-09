@@ -133,9 +133,9 @@ const blogPosts: BlogPost[] = [
   }
 ];
 
-const categories = ["All", "Design", "Systems", "UI/UX", "Engineering", "AI/ML", "Performance"];
+const categories = ["All", "Design", "Engineering", "Systems", "UI/UX", "AI/ML", "Performance"];
 
-type SortMode = "Newest" | "Oldest" | "Trends";
+type SortMode = "Newest" | "Oldest" | "A-Z" | "Z-A" | "Trends";
 
 interface BlogProps {
   isDarkMode: boolean;
@@ -191,7 +191,9 @@ const Blog: React.FC<BlogProps> = ({
     setSortMode(current => {
       switch (current) {
         case "Newest": return "Oldest";
-        case "Oldest": return "Trends";
+        case "Oldest": return "A-Z";
+        case "A-Z": return "Z-A";
+        case "Z-A": return "Trends";
         case "Trends": return "Newest";
         default: return "Newest";
       }
@@ -204,10 +206,25 @@ const Blog: React.FC<BlogProps> = ({
         return [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       case "Oldest":
         return [...posts].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      case "A-Z":
+        return [...posts].sort((a, b) => a.title.localeCompare(b.title));
+      case "Z-A":
+        return [...posts].sort((a, b) => b.title.localeCompare(a.title));
       case "Trends":
         return posts.filter(post => post.category === "Trends");
       default:
         return posts;
+    }
+  };
+
+  const getSortIcon = () => {
+    switch (sortMode) {
+      case "Newest": return "🔥"; // Fire for newest/hot content
+      case "Oldest": return "📅"; // Calendar for oldest/chronological
+      case "A-Z": return "🔤"; // ABC for alphabetical A-Z
+      case "Z-A": return "🔡"; // ZYX for reverse alphabetical Z-A
+      case "Trends": return "📈"; // Chart for trending
+      default: return "🔄";
     }
   };
 
@@ -332,12 +349,33 @@ const Blog: React.FC<BlogProps> = ({
             </button>
           ))}
           <button
-            className={`category-btn sort-btn ${sortMode === 'Trends' ? 'active' : ''}`}
+            className="category-btn sort-btn"
             onClick={toggleSortMode}
-            title={`Currently: ${sortMode}. Click to cycle through Newest → Oldest → Trends`}
+            title={`Sort by ${sortMode}`}
           >
-            {sortMode}
+            {getSortIcon()}
           </button>
+          <div className="search-container">
+            <div className="search-input-wrapper">
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+              {searchQuery && (
+                <button 
+                  className="clear-search-btn"
+                  onClick={clearSearch}
+                  title="Clear search"
+                >
+                  ×
+                </button>
+              )}
+              <div className="search-icon">🔍</div>
+            </div>
+          </div>
         </div>
 
         <div className="blog-grid">

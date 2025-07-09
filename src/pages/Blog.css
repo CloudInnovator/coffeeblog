@@ -572,6 +572,23 @@
   color: #ffffff;
 }
 
+/* Sort button styles */
+.sort-btn {
+  background: #f8f9fa;
+  border-color: #6c757d;
+  color: #495057;
+}
+
+.sort-btn:hover,
+.sort-btn.active {
+  background: #6c757d;
+  color: white;
+}
+
+.sort-btn::before {
+  background: #6c757d;
+}
+
 /* Dark mode for sort button */
 .blog.dark-mode .sort-btn {
   background: #374151;
