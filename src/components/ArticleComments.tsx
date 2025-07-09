@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import './ArticleComments.css';
 
 interface Comment {
   id: string;
-  articleId: string;
   content: string;
+  created_at: string;
   username: string;
-  isAnonymous: boolean;
-  timestamp: string;
+  is_anonymous: boolean;
 }
 
 interface ArticleCommentsProps {
@@ -18,141 +18,126 @@ interface ArticleCommentsProps {
 const ArticleComments: React.FC<ArticleCommentsProps> = ({ articleId, articleTitle }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
-  const [username, setUsername] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Load comments for this article
-    const allComments = JSON.parse(localStorage.getItem('articleComments') || '[]');
-    const articleComments = allComments.filter((comment: Comment) => comment.articleId === articleId);
-    setComments(articleComments);
-
-    // Check if user is logged in
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      const userData = JSON.parse(user);
-      setIsLoggedIn(true);
-      setUsername(userData.username);
-    }
+    loadComments();
   }, [articleId]);
 
-  const handleSubmitComment = (e: React.FormEvent) => {
+  const loadComments = async () => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('article_comments')
+        .select('*')
+        .eq('article_id', articleId)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setComments(data || []);
+    } catch (error) {
+      console.error('Error loading comments:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
-    const comment: Comment = {
-      id: Date.now().toString(),
-      articleId,
-      content: newComment.trim(),
-      username: isAnonymous ? 'Anonymous' : (username || 'Guest'),
-      isAnonymous,
-      timestamp: new Date().toISOString()
-    };
+    setIsSubmitting(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        alert('Please sign in to comment');
+        return;
+      }
 
-    // Save to all comments
-    const allComments = JSON.parse(localStorage.getItem('articleComments') || '[]');
-    const updatedComments = [...allComments, comment];
-    localStorage.setItem('articleComments', JSON.stringify(updatedComments));
+      // Get user profile for username
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', user.id)
+        .single();
 
-    // Save to user's comments if they're logged in
-    if (isLoggedIn) {
-      const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
-      const userComment = {
-        id: comment.id,
-        articleId,
-        articleTitle,
-        content: comment.content,
-        date: new Date(comment.timestamp).toLocaleDateString(),
-        isAnonymous,
-        username: comment.username
-      };
-      userComments.push(userComment);
-      localStorage.setItem('userComments', JSON.stringify(userComments));
+      const { error } = await supabase
+        .from('article_comments')
+        .insert([
+          {
+            user_id: user.id,
+            article_id: articleId,
+            article_title: articleTitle,
+            content: newComment.trim(),
+            username: isAnonymous ? 'Anonymous' : (profile?.username || 'User'),
+            is_anonymous: isAnonymous
+          }
+        ]);
+
+      if (error) throw error;
+
+      setNewComment('');
+      setIsAnonymous(false);
+      await loadComments();
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+      alert('Error submitting comment. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    // Update local state
-    setComments([...comments, comment]);
-    setNewComment('');
-  };
-
-  const formatDate = (timestamp: string) => {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString() + ' at ' + date.toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
   };
 
   return (
     <div className="article-comments">
-      <div className="comments-header">
-        <h3>Comments ({comments.length})</h3>
-      </div>
+      <h3>Comments ({comments.length})</h3>
+      
+      <form onSubmit={handleSubmitComment} className="comment-form">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Share your thoughts..."
+          rows={4}
+          className="comment-input"
+        />
+        <div className="comment-form-actions">
+          <label className="anonymous-checkbox">
+            <input
+              type="checkbox"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+            />
+            Post anonymously
+          </label>
+          <button
+            type="submit"
+            disabled={isSubmitting || !newComment.trim()}
+            className="submit-comment-btn"
+          >
+            {isSubmitting ? 'Posting...' : 'Post Comment'}
+          </button>
+        </div>
+      </form>
 
       <div className="comments-list">
-        {comments.length === 0 ? (
-          <div className="no-comments">
-            <p>No comments yet. Be the first to share your thoughts!</p>
-          </div>
+        {isLoading ? (
+          <div className="loading">Loading comments...</div>
+        ) : comments.length === 0 ? (
+          <div className="no-comments">No comments yet. Be the first to comment!</div>
         ) : (
-          comments.map(comment => (
+          comments.map((comment) => (
             <div key={comment.id} className="comment">
               <div className="comment-header">
-                <span className="comment-author">
-                  {comment.isAnonymous ? '👤 Anonymous' : `👤 ${comment.username}`}
-                </span>
+                <span className="comment-author">{comment.username}</span>
                 <span className="comment-date">
-                  {formatDate(comment.timestamp)}
+                  {new Date(comment.created_at).toLocaleDateString()}
                 </span>
               </div>
-              <div className="comment-content">
-                {comment.content}
-              </div>
+              <div className="comment-content">{comment.content}</div>
             </div>
           ))
         )}
-      </div>
-
-      <div className="comment-form">
-        <h4>Add a Comment</h4>
-        <form onSubmit={handleSubmitComment}>
-          {!isLoggedIn && (
-            <div className="username-input">
-              <input
-                type="text"
-                placeholder="Your name (optional)"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="username-field"
-              />
-            </div>
-          )}
-          
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Share your thoughts..."
-            className="comment-textarea"
-            rows={4}
-            required
-          />
-          
-          <div className="comment-options">
-            <label className="anonymous-checkbox">
-              <input
-                type="checkbox"
-                checked={isAnonymous}
-                onChange={(e) => setIsAnonymous(e.target.checked)}
-              />
-              Comment anonymously
-            </label>
-            
-            <button type="submit" className="btn btn-primary">
-              Post Comment
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

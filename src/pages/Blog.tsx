@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import SaveArticleButton from '../components/SaveArticleButton';
 import LikeButton from '../components/LikeButton';
 import ArticleComments from '../components/ArticleComments';
@@ -15,9 +16,11 @@ interface BlogPost {
   readTime: string;
   image: string;
   imageUrl?: string;
+  published?: boolean;
+  user_id?: string;
 }
 
-const blogPosts: BlogPost[] = [
+const defaultBlogPosts: BlogPost[] = [
   {
     id: 1,
     title: "Design System Architecture: Scaling Visual Consistency Across Organizations",
@@ -43,18 +46,6 @@ const blogPosts: BlogPost[] = [
   },
   {
     id: 3,
-    title: "Micro-Frontend Architecture: Engineering Scalable UI Systems",
-    excerpt: "Technical analysis of micro-frontend patterns and their impact on large-scale application architecture.",
-    content: "Micro-frontends represent a significant shift in how we architect large applications. This analysis examines implementation patterns from companies like Spotify, IKEA, and Zalando. We explore module federation, shared dependencies, routing strategies, and the engineering challenges of maintaining consistent user experiences across independent teams and deployment cycles.",
-    author: "Emma Rodriguez",
-    date: "2024-07-10",
-    category: "Architecture",
-    readTime: "10 min read",
-    image: "🏗️",
-    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-  },
-  {
-    id: 4,
     title: "Performance Engineering: Optimizing React Applications at Scale",
     excerpt: "Deep dive into performance optimization strategies for large React applications and component libraries.",
     content: "Performance optimization in modern React applications requires understanding both theoretical concepts and practical implementation strategies. This analysis covers bundle splitting strategies, lazy loading patterns, memoization techniques, and virtual scrolling implementations. We examine case studies from high-traffic applications and the engineering decisions that enable sub-second load times.",
@@ -65,63 +56,7 @@ const blogPosts: BlogPost[] = [
     image: "⚡"
   },
   {
-    id: 5,
-    title: "Machine Learning in Frontend Development: AI-Powered User Interfaces",
-    excerpt: "Analysis of how machine learning is being integrated into frontend development workflows and user interface design.",
-    content: "Machine learning is transforming frontend development through AI-powered design tools, intelligent code completion, and adaptive user interfaces. This analysis examines how ML models are being integrated into design systems, automated testing workflows, and user experience optimization. We explore tools like GitHub Copilot, Figma's AI features, and how predictive models are enabling more personalized user experiences.",
-    author: "Dr. Lisa Wang",
-    date: "2024-06-28",
-    category: "AI/ML",
-    readTime: "9 min read",
-    image: "💅",
-    imageUrl: "https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-  },
-  {
-    id: 6,
-    title: "Accessibility Engineering: Building Inclusive Design Systems",
-    excerpt: "How accessibility considerations are integrated into modern design system architecture and engineering workflows.",
-    content: "Accessibility in design systems requires both design and engineering considerations from the ground up. This analysis explores how teams build accessible components, implement ARIA patterns, and create testing workflows that catch accessibility issues early. We examine automated testing tools, manual testing strategies, and how accessibility audits are integrated into CI/CD pipelines.",
-    author: "Alex Martinez",
-    date: "2024-06-20",
-    category: "Engineering",
-    readTime: "7 min read",
-    image: "♿"
-  },
-  {
-    id: 7,
-    title: "Design Token Architecture: From Design to Code Automation",
-    excerpt: "How design tokens are architected to create seamless design-to-development workflows and maintain visual consistency.",
-    content: "Design tokens represent the bridge between design and development, encoding design decisions in a format that can be consumed by both design tools and code. This analysis examines token taxonomy strategies, multi-platform compilation workflows, and how teams like those at Amazon and Salesforce have built token systems that scale across products and platforms.",
-    author: "Jordan Blake",
-    date: "2024-07-25",
-    category: "Design",
-    readTime: "11 min read",
-    image: "�"
-  },
-  {
-    id: 8,
-    title: "State Management Architecture: Engineering Predictable UI State",
-    excerpt: "Analysis of state management patterns and architectures that enable predictable, maintainable user interfaces.",
-    content: "State management is one of the most critical architectural decisions in modern applications. This analysis compares patterns from Redux, Zustand, Jotai, and Valtio, examining how different approaches handle state normalization, async operations, and component coupling. We explore the trade-offs between simplicity and power, and how state architecture decisions impact both developer experience and application performance.",
-    author: "Maya Patel",
-    date: "2024-07-18",
-    category: "Architecture",
-    readTime: "9 min read",
-    image: "🔄"
-  },
-  {
-    id: 9,
-    title: "Mobile-First Design Engineering: Responsive Architecture Patterns",
-    excerpt: "How mobile-first design principles are implemented in modern frontend architectures and design systems.",
-    content: "Mobile-first design requires both design and engineering strategies that prioritize mobile experiences while scaling to desktop. This analysis examines responsive design patterns, progressive enhancement strategies, and how teams architect components that work seamlessly across device types. We explore CSS Grid and Flexbox patterns, touch interaction design, and performance considerations for mobile devices.",
-    author: "Carlos Rodriguez",
-    date: "2024-07-12",
-    category: "UI/UX",
-    readTime: "8 min read",
-    image: "�"
-  },
-  {
-    id: 10,
+    id: 4,
     title: "2024 Design & Engineering Trends: What's Shaping the Industry",
     excerpt: "Analysis of emerging trends in design systems, development frameworks, and engineering practices shaping 2024.",
     content: "The design and engineering landscape is rapidly evolving with new frameworks, design methodologies, and development practices. This analysis examines key trends including AI-assisted design tools, micro-interactions, serverless architectures, and the rise of design tokens. We explore how teams are adapting to new technologies while maintaining focus on user experience and development efficiency.",
@@ -133,7 +68,7 @@ const blogPosts: BlogPost[] = [
   }
 ];
 
-const categories = ["All", "Design", "Engineering", "Systems", "UI/UX", "AI/ML", "Performance"];
+const categories = ["All", "Design", "Engineering", "Systems", "UI/UX", "AI/ML", "Performance", "Trends"];
 
 type SortMode = "Newest" | "Oldest" | "A-Z" | "Z-A" | "Trends";
 
@@ -155,32 +90,50 @@ const Blog: React.FC<BlogProps> = ({
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>("Newest");
-  const [userArticles, setUserArticles] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(externalSearchQuery);
 
-  // Load user articles from localStorage
+  // Load blog posts from Supabase
   useEffect(() => {
-    const savedArticles = localStorage.getItem('userArticles');
-    if (savedArticles) {
-      const articles = JSON.parse(savedArticles);
-      // Only show published articles and convert to BlogPost format
-      const publishedArticles = articles
-        .filter((article: any) => article.published)
-        .map((article: any) => ({
-          id: parseInt(article.id),
-          title: article.title,
-          excerpt: article.excerpt,
-          content: article.content,
-          author: article.author,
-          date: article.date,
-          category: article.category,
-          readTime: article.readTime,
-          image: article.image,
-          imageUrl: article.imageUrl
-        }));
-      setUserArticles(publishedArticles);
-    }
+    loadBlogPosts();
   }, []);
+
+  const loadBlogPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Transform data to match BlogPost interface
+      const transformedPosts = data.map(post => ({
+        id: post.id,
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.content,
+        author: post.author,
+        date: post.created_at,
+        category: post.category,
+        readTime: post.read_time,
+        image: post.image,
+        imageUrl: post.image_url,
+        published: post.published,
+        user_id: post.user_id
+      }));
+
+      setBlogPosts(transformedPosts);
+    } catch (error) {
+      console.error('Error loading blog posts:', error);
+      // Fallback to default posts if Supabase fails
+      setBlogPosts(defaultBlogPosts);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Sync external search query
   useEffect(() => {
@@ -228,8 +181,8 @@ const Blog: React.FC<BlogProps> = ({
     }
   };
 
-  // Combine default blog posts with user articles
-  const allPosts = [...blogPosts, ...userArticles];
+  // Use blogPosts directly (includes both default and Supabase posts)
+  const allPosts = blogPosts;
 
   // Filter posts based on search query
   const searchFilteredPosts = searchQuery.trim() === "" 
@@ -269,6 +222,19 @@ const Blog: React.FC<BlogProps> = ({
   const handleBackClick = () => {
     setSelectedPost(null);
   };
+
+  if (loading) {
+    return (
+      <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
+        <div className="container">
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Loading blog posts...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (selectedPost) {
     return (

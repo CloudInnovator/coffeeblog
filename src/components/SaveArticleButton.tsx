@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import './SaveArticleButton.css';
 
 interface SaveArticleButtonProps {
@@ -17,51 +18,83 @@ const SaveArticleButton: React.FC<SaveArticleButtonProps> = ({
   url
 }) => {
   const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check if article is already saved
-    const savedArticles = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-    const isArticleSaved = savedArticles.some((article: any) => article.id === articleId);
-    setIsSaved(isArticleSaved);
+    checkIfSaved();
   }, [articleId]);
 
-  const handleSaveToggle = () => {
-    const savedArticles = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+  const checkIfSaved = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-    if (isSaved) {
-      // Remove from saved articles
-      const updatedArticles = savedArticles.filter((article: any) => article.id !== articleId);
-      localStorage.setItem('savedArticles', JSON.stringify(updatedArticles));
-      
-      // Also remove associated notes
-      const userNotes = JSON.parse(localStorage.getItem('userNotes') || '[]');
-      const updatedNotes = userNotes.filter((note: any) => note.articleId !== articleId);
-      localStorage.setItem('userNotes', JSON.stringify(updatedNotes));
-      
-      setIsSaved(false);
-    } else {
-      // Add to saved articles
-      const newArticle = {
-        id: articleId,
-        title,
-        excerpt,
-        category,
-        url,
-        savedAt: new Date().toISOString()
-      };
-      const updatedArticles = [...savedArticles, newArticle];
-      localStorage.setItem('savedArticles', JSON.stringify(updatedArticles));
-      setIsSaved(true);
+      const { data } = await supabase
+        .from('saved_articles')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('article_id', articleId)
+        .single();
+
+      setIsSaved(!!data);
+    } catch (error) {
+      console.error('Error checking saved status:', error);
+    }
+  };
+
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        alert('Please sign in to save articles');
+        return;
+      }
+
+      if (isSaved) {
+        // Remove from saved articles
+        const { error } = await supabase
+          .from('saved_articles')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('article_id', articleId);
+
+        if (error) throw error;
+        setIsSaved(false);
+      } else {
+        // Add to saved articles
+        const { error } = await supabase
+          .from('saved_articles')
+          .insert([
+            {
+              user_id: user.id,
+              article_id: articleId,
+              title,
+              excerpt,
+              category,
+              url
+            }
+          ]);
+
+        if (error) throw error;
+        setIsSaved(true);
+      }
+    } catch (error) {
+      console.error('Error saving article:', error);
+      alert('Error saving article. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
-      className={`save-article-btn ${isSaved ? 'saved' : ''}`}
-      onClick={handleSaveToggle}
+      onClick={handleSave}
+      disabled={isLoading}
+      className={`save-btn ${isSaved ? 'saved' : ''}`}
       title={isSaved ? 'Remove from saved' : 'Save article'}
     >
-      {isSaved ? '💾 Saved' : '🔖 Save'}
+      {isLoading ? '...' : isSaved ? '📚' : '🔖'}
     </button>
   );
 };

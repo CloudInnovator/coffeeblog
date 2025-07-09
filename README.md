@@ -1,24 +1,63 @@
-# Dot Product - Design & Engineering Analysis Blog
+# Coffee Blog - React + Supabase
 
-A modern React blog focused on design systems, UI/UX patterns, frontend architecture, and engineering best practices. Features in-depth analysis and meta-analysis of design and engineering decisions.
+A modern blog application built with React, TypeScript, and Supabase backend.
 
 ## Features
 
-- **Design Systems Analysis**: Deep dives into design patterns and component architectures
-- **Engineering Meta-Analysis**: Analysis of frontend frameworks, build tools, and development practices  
-- **UI/UX Case Studies**: Examination of user interface design decisions and their impact
-- **Coffee Support System**: Integrated subscription system to support content creators
+- ✅ **Authentication**: Secure user registration and login with Supabase Auth
+- ✅ **Blog System**: Create, read, update, and delete blog posts
+- ✅ **User Interactions**: Like articles, save articles, and comment on posts
+- ✅ **Search & Filter**: Search articles by title/content and filter by categories
+- ✅ **Responsive Design**: Mobile-first responsive design with dark mode support
+- ✅ **User Profiles**: User roles (admin, publisher, subscriber, donor)
+- ✅ **Real-time Updates**: Live updates for comments and likes
 
 ## Tech Stack
 
-- React 19 with TypeScript
-- React Router for navigation
-- Modern CSS with glassmorphism and gradient effects
-- Responsive design
+- **Frontend**: React 19, TypeScript, CSS3
+- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
+- **Routing**: React Router v7
+- **Build Tool**: Create React App
 
-## Getting Started
+## Setup Instructions
+
+### 1. Clone the Repository
 
 ```bash
+git clone <repository-url>
+cd coffeeblog
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up Supabase
+
+1. Create a new project at [supabase.com](https://supabase.com)
+2. Copy your project URL and anon key
+3. Create a `.env` file in the root directory:
+
+```env
+REACT_APP_SUPABASE_URL=your-supabase-url
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
+```
+
+### 4. Set up Database
+
+1. Go to your Supabase dashboard
+2. Open the SQL editor
+3. Run the SQL script from `supabase-setup.sql` to create all necessary tables and policies
+
+### 5. Start the Development Server
+
+```bash
+npm start
+```
+
+The application will open at `http://localhost:3000`bash
 npm install
 npm start
 ```

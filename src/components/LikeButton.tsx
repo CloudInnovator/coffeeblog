@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import './LikeButton.css';
 
 interface LikeButtonProps {
@@ -6,70 +7,99 @@ interface LikeButtonProps {
   title: string;
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({
-  articleId,
-  title
-}) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ articleId, title }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check if article is already liked
-    const likedArticles = JSON.parse(localStorage.getItem('likedArticles') || '[]');
-    const isArticleLiked = likedArticles.some((article: any) => article.id === articleId);
-    setIsLiked(isArticleLiked);
-
-    // Get like count for this article
-    const likeCounts = JSON.parse(localStorage.getItem('likeCounts') || '{}');
-    setLikeCount(likeCounts[articleId] || 0);
+    checkLikeStatus();
+    getLikeCount();
   }, [articleId]);
 
-  const handleLikeToggle = () => {
-    const likedArticles = JSON.parse(localStorage.getItem('likedArticles') || '[]');
-    const likeCounts = JSON.parse(localStorage.getItem('likeCounts') || '{}');
+  const checkLikeStatus = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
-    if (isLiked) {
-      // Remove like
-      const updatedArticles = likedArticles.filter((article: any) => article.id !== articleId);
-      localStorage.setItem('likedArticles', JSON.stringify(updatedArticles));
-      
-      // Decrease like count
-      const newCount = Math.max(0, (likeCounts[articleId] || 0) - 1);
-      likeCounts[articleId] = newCount;
-      localStorage.setItem('likeCounts', JSON.stringify(likeCounts));
-      
-      setIsLiked(false);
-      setLikeCount(newCount);
-    } else {
-      // Add like
-      const newLike = {
-        id: articleId,
-        title,
-        likedAt: new Date().toISOString()
-      };
-      const updatedArticles = [...likedArticles, newLike];
-      localStorage.setItem('likedArticles', JSON.stringify(updatedArticles));
-      
-      // Increase like count
-      const newCount = (likeCounts[articleId] || 0) + 1;
-      likeCounts[articleId] = newCount;
-      localStorage.setItem('likeCounts', JSON.stringify(likeCounts));
-      
-      setIsLiked(true);
-      setLikeCount(newCount);
+      const { data } = await supabase
+        .from('article_likes')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('article_id', articleId)
+        .single();
+
+      setIsLiked(!!data);
+    } catch (error) {
+      console.error('Error checking like status:', error);
+    }
+  };
+
+  const getLikeCount = async () => {
+    try {
+      const { count } = await supabase
+        .from('article_likes')
+        .select('*', { count: 'exact' })
+        .eq('article_id', articleId);
+
+      setLikeCount(count || 0);
+    } catch (error) {
+      console.error('Error getting like count:', error);
+    }
+  };
+
+  const handleLike = async () => {
+    setIsLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        alert('Please sign in to like articles');
+        return;
+      }
+
+      if (isLiked) {
+        // Remove like
+        const { error } = await supabase
+          .from('article_likes')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('article_id', articleId);
+
+        if (error) throw error;
+        setIsLiked(false);
+        setLikeCount(prev => prev - 1);
+      } else {
+        // Add like
+        const { error } = await supabase
+          .from('article_likes')
+          .insert([
+            {
+              user_id: user.id,
+              article_id: articleId,
+              article_title: title
+            }
+          ]);
+
+        if (error) throw error;
+        setIsLiked(true);
+        setLikeCount(prev => prev + 1);
+      }
+    } catch (error) {
+      console.error('Error liking article:', error);
+      alert('Error liking article. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
-      className={`like-article-btn ${isLiked ? 'liked' : ''}`}
-      onClick={handleLikeToggle}
-      title={isLiked ? 'Unlike article' : 'Like article'}
+      onClick={handleLike}
+      disabled={isLoading}
+      className={`like-btn ${isLiked ? 'liked' : ''}`}
+      title={isLiked ? 'Unlike' : 'Like'}
     >
-      <span className="like-icon">{isLiked ? '💜' : '💜'}</span>
-      <span className="like-text">
-        {likeCount > 0 && `${likeCount}`}
-      </span>
+      {isLoading ? '...' : isLiked ? '❤️' : '🤍'} {likeCount}
     </button>
   );
 };

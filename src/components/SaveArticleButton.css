@@ -1,85 +1,36 @@
-.save-article-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.1rem;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e2e8f0;
-  padding: 0.15rem 0.3rem;
-  border-radius: 10px;
+.save-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  font-size: 0.65rem;
-  min-height: 20px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  color: #666;
 }
 
-.save-article-btn:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.save-article-btn.saved {
-  background: rgba(102, 126, 234, 0.1);
-  border-color: #667eea;
-  color: #667eea;
-}
-
-.save-article-btn.saved:hover {
-  background: rgba(102, 126, 234, 0.15);
-}
-
-.save-article-btn.loading {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-.save-article-btn:disabled {
-  cursor: not-allowed;
-}
-
-.save-icon {
-  font-size: 0.7rem;
-  transition: transform 0.3s ease;
-}
-
-.save-article-btn:hover .save-icon {
+.save-btn:hover {
+  background: #f1f1f1;
   transform: scale(1.1);
 }
 
-.save-text {
-  font-size: 0.9rem;
-  white-space: nowrap;
+.save-btn.saved {
+  color: #007bff;
 }
 
-.loading-spinner {
-  font-size: 1rem;
-  animation: spin 1s linear infinite;
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dark-mode .save-btn {
+  color: #ccc;
 }
 
-@media (max-width: 768px) {
-  .save-article-btn {
-    padding: 0.1rem 0.25rem;
-    font-size: 0.6rem;
-    min-height: 18px;
-  }
-  
-  .save-icon {
-    font-size: 0.6rem;
-  }
-  
-  .save-text {
-    font-size: 0.55rem;
-  }
+.dark-mode .save-btn:hover {
+  background: #333;
+}
+
+.dark-mode .save-btn.saved {
+  color: #4dabf7;
 }
