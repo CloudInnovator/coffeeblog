@@ -1,105 +1,130 @@
 import React from 'react';
 import './About.css';
 
-const About: React.FC = () => {
+interface AboutProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const About: React.FC<AboutProps> = ({ isDarkMode, toggleDarkMode }) => {
   return (
-    <div className="about">
+    <div className={`about ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="container">
-        <section className="mission">
+        <div className="about-header">
+          <h1>About Coffee Blog</h1>
+          <p>
+            A passionate community exploring the intersection of technology, design, and great content.
+          </p>
+        </div>
+
+        <div className="mission">
           <div className="mission-content">
             <h2>Our Mission</h2>
             <p>
-              Dot Product provides comprehensive technical analysis 
-              that shapes modern web experiences. We believe that understanding how successful 
-              design and engineering teams build scalable, maintainable systems helps the entire community grow.
+              We believe in creating thoughtful, in-depth content that helps developers, designers, and 
+              technology enthusiasts stay informed about the latest trends and best practices in their fields.
             </p>
             <p>
-              Our analysts are experienced designers and engineers who have worked on large-scale 
-              design systems and frontend architectures. We focus on practical analysis that helps teams 
-              make better technical and design decisions, from component API design to state management patterns.
+              Our platform combines the love of great coffee with the passion for great code, creating 
+              a space where community members can both learn and contribute to the ongoing conversation 
+              about modern web development and design.
             </p>
           </div>
-        </section>
+        </div>
 
-        <section className="team">
-          <h2>Our Analysts</h2>
+        <div className="team">
+          <h2>Our Team</h2>
           <div className="team-grid">
             <div className="team-member">
-              <div className="member-avatar">👩‍💻</div>
-              <h3>Sarah Chen</h3>
-              <p className="role">Design Systems Analyst</p>
-              <p>Former design systems lead with 8 years experience building scalable component libraries and design tokens.</p>
-            </div>
-            <div className="team-member">
               <div className="member-avatar">👨‍💻</div>
-              <h3>David Kim</h3>
-              <p className="role">Frontend Architecture Analyst</p>
-              <p>Ex-engineering lead who has built micro-frontend architectures and performance optimization systems.</p>
+              <h3>Tech Lead</h3>
+              <p className="role">Full Stack Developer</p>
+              <p>
+                Passionate about creating scalable web applications and sharing knowledge 
+                about modern development practices.
+              </p>
             </div>
             <div className="team-member">
-              <div className="member-avatar">👩‍🔬</div>
-              <h3>Dr. Lisa Wang</h3>
-              <p className="role">UI/UX Engineering Analyst</p>
-              <p>Former principal engineer with expertise in accessibility, performance, and user experience engineering.</p>
+              <div className="member-avatar">🎨</div>
+              <h3>Design Lead</h3>
+              <p className="role">UI/UX Designer</p>
+              <p>
+                Focused on creating intuitive and beautiful user experiences that make 
+                complex topics accessible to everyone.
+              </p>
             </div>
             <div className="team-member">
-              <div className="member-avatar">👨‍🚀</div>
-              <h3>Michael Torres</h3>
-              <p className="role">Infrastructure Analyst</p>
-              <p>Former Netflix senior engineer who built content delivery systems serving 260+ million subscribers.</p>
+              <div className="member-avatar">📝</div>
+              <h3>Content Creator</h3>
+              <p className="role">Technical Writer</p>
+              <p>
+                Dedicated to crafting clear, comprehensive content that helps developers 
+                grow their skills and stay up-to-date.
+              </p>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section className="coffee-connection">
+        <div className="coffee-connection">
           <h2>Why Coffee?</h2>
           <div className="coffee-content">
             <p>
-              Every great engineering breakthrough happens over countless cups of coffee. Our 
-              subscription model ensures our analysts can focus on deep research and quality 
-              analysis instead of chasing ad revenue or sponsored content.
+              Coffee is more than just a drink – it's the fuel that powers late-night coding sessions, 
+              the companion to morning design reviews, and the catalyst for great conversations.
             </p>
             <p>
-              When you subscribe to our coffee service, you're directly supporting independent 
-              tech analysis. 60% of every subscription goes directly to our analysts, 25% covers 
-              operational costs, and 15% ensures you get excellent coffee delivered to your door.
+              Just like great code, great coffee requires attention to detail, patience, and passion. 
+              We believe both deserve to be celebrated.
             </p>
             <div className="transparency-box">
-              <h3>Full Transparency</h3>
+              <h3>Support Transparency</h3>
               <ul>
-                <li>60% - Direct analyst compensation</li>
-                <li>25% - Platform operations & hosting</li>
-                <li>15% - Premium coffee sourcing & shipping</li>
+                <li>💰 All donations go toward content creation</li>
+                <li>☕ Coffee purchases support our writing team</li>
+                <li>📚 Subscriptions help us maintain the platform</li>
+                <li>🎯 100% focused on quality content</li>
               </ul>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section className="values">
+        <div className="values">
           <h2>Our Values</h2>
           <div className="values-grid">
             <div className="value">
-              <div className="value-icon">🔍</div>
-              <h3>Technical Accuracy</h3>
-              <p>Every article is technically reviewed by experts in the field before publication.</p>
-            </div>
-            <div className="value">
-              <div className="value-icon">🏗️</div>
-              <h3>Engineering Focus</h3>
-              <p>We focus on the engineering challenges and solutions, not just the business outcomes.</p>
-            </div>
-            <div className="value">
               <div className="value-icon">🎯</div>
-              <h3>Independence</h3>
-              <p>No corporate sponsors or advertising means our analysis is unbiased and honest.</p>
+              <h3>Quality First</h3>
+              <p>
+                We prioritize depth over breadth, ensuring every piece of content provides 
+                real value to our community.
+              </p>
             </div>
             <div className="value">
-              <div className="value-icon">📚</div>
-              <h3>Education</h3>
-              <p>We explain complex systems in a way that helps engineers at all levels learn.</p>
+              <div className="value-icon">🌟</div>
+              <h3>Community Driven</h3>
+              <p>
+                Our content is shaped by the needs and interests of our community members 
+                and contributors.
+              </p>
+            </div>
+            <div className="value">
+              <div className="value-icon">🔬</div>
+              <h3>Practical Focus</h3>
+              <p>
+                We emphasize practical, actionable insights that you can apply immediately 
+                in your projects.
+              </p>
+            </div>
+            <div className="value">
+              <div className="value-icon">🚀</div>
+              <h3>Innovation</h3>
+              <p>
+                We stay at the forefront of technology trends while maintaining a critical 
+                perspective on new tools and practices.
+              </p>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

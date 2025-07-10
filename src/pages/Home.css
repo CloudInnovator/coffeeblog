@@ -318,6 +318,19 @@
   height: 100%;
 }
 
+/* Ensure post cards and all components are always visible */
+.home .post-card,
+.home.dark-mode .post-card {
+  display: block;
+  background: #fff;
+  color: #222;
+}
+
+.home.dark-mode .post-card {
+  background: #23272f;
+  color: #f3f4f6;
+}
+
 .post-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
@@ -448,7 +461,29 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Fix second post card for dark mode: ensure text and icons are visible */
+.post-card {
+  background: #fff;
+  color: #222;
+}
 
+.home.dark-mode .post-card {
+  background: #23272f;
+  color: #f3f4f6;
+}
+
+.home.dark-mode .post-card .post-title,
+.home.dark-mode .post-card .post-excerpt,
+.home.dark-mode .post-card .post-meta,
+.home.dark-mode .post-card .read-more,
+.home.dark-mode .post-card .post-actions button {
+  color: #f3f4f6 !important;
+}
+
+.home.dark-mode .post-card .post-actions button {
+  background: #23272f;
+  border-color: #444;
+}
 
 @media (max-width: 768px) {
   .subscription-card.featured {

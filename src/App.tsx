@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Blog from "./pages/Blog";
+import About from "./pages/About";
 import Donations from "./pages/Donations";
 import Subscriptions from "./pages/Subscriptions";
 import Contact from "./pages/Contact";

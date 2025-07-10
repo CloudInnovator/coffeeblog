@@ -3,6 +3,18 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || 'https://your-project.supabase.co'
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || 'your-anon-key'
 
+// Debug logging (remove in production)
+console.log('Supabase URL:', supabaseUrl)
+console.log('Supabase Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...')
+
+if (!supabaseUrl || supabaseUrl.includes('your-project')) {
+  console.error('❌ Supabase URL is not configured properly')
+}
+
+if (!supabaseAnonKey || supabaseAnonKey.includes('your-anon-key')) {
+  console.error('❌ Supabase anon key is not configured properly')
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Database types

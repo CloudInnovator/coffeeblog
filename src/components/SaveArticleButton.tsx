@@ -94,7 +94,7 @@ const SaveArticleButton: React.FC<SaveArticleButtonProps> = ({
       className={`save-btn ${isSaved ? 'saved' : ''}`}
       title={isSaved ? 'Remove from saved' : 'Save article'}
     >
-      {isLoading ? '...' : isSaved ? '📚' : '🔖'}
+      {isLoading ? '...' : isSaved ? '📚 Saved' : '🔖 Save'}
     </button>
   );
 };

@@ -68,7 +68,9 @@ const defaultBlogPosts: BlogPost[] = [
   }
 ];
 
-const categories = ["All", "Design", "Engineering", "Systems", "UI/UX", "AI/ML", "Performance", "Trends"];
+const categories = [
+  "All", "Design", "Engineering", "Systems", "UI/UX", "AI/ML", "Performance", "Start Ups", "News", "Education", "Miscellaneous"
+];
 
 type SortMode = "Newest" | "Oldest" | "A-Z" | "Z-A" | "Trends";
 

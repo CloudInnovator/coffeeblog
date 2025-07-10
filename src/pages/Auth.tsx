@@ -155,26 +155,41 @@ const Auth: React.FC<AuthProps> = ({ isDarkMode, onAuthSuccess }) => {
       });
 
       if (error) {
+        console.error('Registration error:', error);
         setErrors({ general: error.message });
         return false;
       }
 
       if (data.user) {
-        // Create user profile
-        const { error: profileError } = await supabase
+        // Wait a moment for the trigger to create the profile
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Try to get the profile created by the trigger
+        const { data: profile, error: profileError } = await supabase
           .from('profiles')
-          .insert([
-            {
-              id: data.user.id,
-              username: formData.username,
-              email: formData.email,
-              role: 'subscriber'
-            }
-          ]);
+          .select('*')
+          .eq('id', data.user.id)
+          .single();
 
         if (profileError) {
-          setErrors({ general: 'Error creating user profile' });
-          return false;
+          console.error('Profile fetch error:', profileError);
+          // If trigger didn't work, try manual creation
+          const { error: manualError } = await supabase
+            .from('profiles')
+            .insert([
+              {
+                id: data.user.id,
+                username: formData.username,
+                email: formData.email,
+                role: 'subscriber'
+              }
+            ]);
+
+          if (manualError) {
+            console.error('Manual profile creation error:', manualError);
+            setErrors({ general: `Error creating user profile: ${manualError.message}` });
+            return false;
+          }
         }
 
         // If user is immediately confirmed, log them in
@@ -194,6 +209,7 @@ const Auth: React.FC<AuthProps> = ({ isDarkMode, onAuthSuccess }) => {
         return true;
       }
     } catch (error) {
+      console.error('Registration error:', error);
       setErrors({ general: 'An error occurred during registration' });
     }
     return false;
