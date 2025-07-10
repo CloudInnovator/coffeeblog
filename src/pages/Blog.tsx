@@ -240,36 +240,30 @@ const Blog: React.FC<BlogProps> = ({
 
   if (selectedPost) {
     return (
-      <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}>
+      <div className={`blog ${isDarkMode ? 'dark-mode' : ''}`}> 
         <div className="container">
           <button className="back-btn" onClick={handleBackClick}>
             ← Back to Blog
           </button>
           <div className="blog-grid-single">
-            <article className="blog-post-full">
-              <header className="post-header">
-                <div className="post-icon">{selectedPost.image}</div>
-                <h1 className="post-title-full">{selectedPost.title}</h1>
-              </header>
-              <div className="post-meta-full">
+            <article className="blog-post-full post-card">
+              <div className="post-icon" style={{ fontSize: '3.5rem', textAlign: 'center', margin: '0 auto 1.5rem auto' }}>{selectedPost.image}</div>
+              <h1 className="post-title-full" style={{ textAlign: 'center', fontSize: '2.2rem', fontWeight: 700, marginBottom: '1.2rem' }}>{selectedPost.title}</h1>
+              <div className="post-meta" style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1.5rem', flexWrap: 'wrap', fontSize: '1rem' }}>
                 <span className="author">{selectedPost.author}</span>
                 <span className="date">{new Date(selectedPost.date).toLocaleDateString()}</span>
                 <span className="read-time">{selectedPost.readTime}</span>
-                <span className="category">{selectedPost.category}</span>
+                <span className="category" style={{ background: '#5a67d8', color: '#fff', borderRadius: '15px', padding: '0.3rem 0.8rem', fontWeight: 600 }}>{selectedPost.category}</span>
               </div>
-              <div className="post-content">
-                <p className="lead">{selectedPost.excerpt}</p>
-                <p>{selectedPost.content}</p>
-                <p>This is a preview of our blog post content. In a full implementation, this would contain the complete article with proper formatting, images, and more detailed content.</p>
+              <div className="post-content" style={{ fontSize: '1.15rem', lineHeight: 1.8, color: isDarkMode ? '#e5e7eb' : '#374151', marginBottom: '2.5rem' }}>
+                <div className="lead" style={{ fontSize: '1.2rem', fontWeight: 500, color: isDarkMode ? '#9ca3af' : '#4b5563', fontStyle: 'normal', marginBottom: '2rem', padding: '1.5rem', background: isDarkMode ? '#23272f' : '#f8fafc', borderLeft: '4px solid #5a67d8', borderRadius: '0 8px 8px 0' }}>{selectedPost.excerpt}</div>
+                <div style={{ marginBottom: '2rem' }}>{selectedPost.content}</div>
               </div>
-              <div className="post-actions-full">
+              <div className="post-actions-full" style={{ display: 'flex', justifyContent: 'center', gap: '1.2rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
                 <LikeButton
                   articleId={selectedPost.id.toString()}
                   title={selectedPost.title}
                 />
-                <button className="like-btn">
-                  ❤️ Like Article
-                </button>
                 <SaveArticleButton
                   articleId={selectedPost.id.toString()}
                   title={selectedPost.title}
@@ -277,17 +271,19 @@ const Blog: React.FC<BlogProps> = ({
                   category={selectedPost.category}
                   url={`/blog/${selectedPost.id}`}
                 />
-                <button className="reads-btn">
+                <button className="reads-btn" style={{ minWidth: 80 }}>
                   👁️ {Math.floor(Math.random() * 5000) + 1000}
                 </button>
-                <button className="comments-btn">
+                <button className="comments-btn" style={{ minWidth: 80 }}>
                   💬 {Math.floor(Math.random() * 100) + 10}
                 </button>
               </div>
-              <ArticleComments 
-                articleId={selectedPost.id.toString()}
-                articleTitle={selectedPost.title}
-              />
+              <div style={{ marginTop: '2.5rem' }}>
+                <ArticleComments 
+                  articleId={selectedPost.id.toString()}
+                  articleTitle={selectedPost.title}
+                />
+              </div>
             </article>
           </div>
         </div>
